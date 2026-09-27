@@ -50,8 +50,7 @@ def to_markdown(card: Scorecard) -> str:
     lines = [
         f"### Scorecard: `{card.reviewer}`",
         "",
-        "| clause type | n | presence acc | span recall | citation prec "
-        "| false refusal | hallucinated |",
+        "| clause type | n | presence acc | span recall | citation prec | false refusal | hallucinated |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for ct, m in sorted(card.by_clause_type.items()):
@@ -107,30 +106,18 @@ def to_svg(card: Scorecard) -> str:
     # gridlines
     for pct in (0, 25, 50, 75, 100):
         x = left + plot_w * pct / 100
-        out.append(
-            f'<line x1="{x:.1f}" y1="{top - 4}" x2="{x:.1f}" y2="{height - bottom + 4}" '
-            f'stroke="#e6e6e6"/>'
-        )
-        out.append(
-            f'<text x="{x:.1f}" y="{height - bottom + 18}" text-anchor="middle" fill="#888">'
-            f"{pct}%</text>"
-        )
+        out.append(f'<line x1="{x:.1f}" y1="{top - 4}" x2="{x:.1f}" y2="{height - bottom + 4}" stroke="#e6e6e6"/>')
+        out.append(f'<text x="{x:.1f}" y="{height - bottom + 18}" text-anchor="middle" fill="#888">{pct}%</text>')
     # bars
     for i, (label, m) in enumerate(rows):
         y = top + i * row_h
         weight = ' font-weight="600"' if label == "OVERALL" else ""
-        out.append(
-            f'<text x="{left - 8}" y="{y + 14}" text-anchor="end" fill="#1a1a1a"{weight}>'
-            f"{label}</text>"
-        )
+        out.append(f'<text x="{left - 8}" y="{y + 14}" text-anchor="end" fill="#1a1a1a"{weight}>{label}</text>')
         for j, name in enumerate(metrics):
             value = getattr(m, name)
             w = plot_w * value
             by = y + 2 + j * (bar_h + gap)
-            out.append(
-                f'<rect x="{left}" y="{by}" width="{w:.1f}" height="{bar_h}" '
-                f'fill="{_COLORS[name]}" rx="1"/>'
-            )
+            out.append(f'<rect x="{left}" y="{by}" width="{w:.1f}" height="{bar_h}" fill="{_COLORS[name]}" rx="1"/>')
     out.append("</svg>")
     return "\n".join(out)
 

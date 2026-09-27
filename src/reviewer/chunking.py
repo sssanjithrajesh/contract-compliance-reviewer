@@ -48,9 +48,7 @@ def _split_long(start: int, text: str, max_chars: int, overlap: int) -> list[tup
     return windows
 
 
-def chunk_text(
-    text: str, max_chars: int = 1200, overlap: int = 150, min_chars: int = 40
-) -> list[Chunk]:
+def chunk_text(text: str, max_chars: int = 1200, overlap: int = 150, min_chars: int = 40) -> list[Chunk]:
     chunks: list[Chunk] = []
     pos = 0
     for match in list(_PARAGRAPH.finditer(text)) + [None]:

@@ -136,9 +136,7 @@ def pick_contracts(data: list[dict], n: int, rng: random.Random) -> list[dict]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
-    )
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--contracts", type=int, default=8)
     parser.add_argument("--seed", type=int, default=SEED)
     args = parser.parse_args(argv)
@@ -167,10 +165,7 @@ def main(argv: list[str] | None = None) -> int:
         present += sum(c["expected"]["present"] for c in cases)
         print(f"  {slug}: {len(cases)} cases ({len(context):,} chars)")
 
-    print(
-        f"\nwrote {total} cases across {len(chosen)} contracts "
-        f"({present} present / {total - present} absent)"
-    )
+    print(f"\nwrote {total} cases across {len(chosen)} contracts ({present} present / {total - present} absent)")
     return 0
 
 

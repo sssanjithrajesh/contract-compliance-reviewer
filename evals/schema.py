@@ -78,9 +78,7 @@ def load_cases(cases_dir: Path = CASES_DIR) -> list[EvalCase]:
     return cases
 
 
-def validate_against_contracts(
-    cases: list[EvalCase], contracts_dir: Path = CONTRACTS_DIR
-) -> list[str]:
+def validate_against_contracts(cases: list[EvalCase], contracts_dir: Path = CONTRACTS_DIR) -> list[str]:
     """Return human-readable problems: missing contract files or spans that don't match."""
     problems: list[str] = []
     cache: dict[str, str] = {}

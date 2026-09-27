@@ -68,14 +68,10 @@ def check_gate(card: Scorecard, gate_path: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
-    )
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--reviewer", default="retrieval-hybrid")
     parser.add_argument("--gate", action="store_true", help="fail if below evals/gate.json")
-    parser.add_argument(
-        "--update-gate", action="store_true", help="write current overall metrics to gate"
-    )
+    parser.add_argument("--update-gate", action="store_true", help="write current overall metrics to gate")
     parser.add_argument("--no-report", action="store_true", help="skip writing SVG/Markdown/JSON")
     args = parser.parse_args(argv)
 

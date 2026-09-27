@@ -58,9 +58,7 @@ def evaluate(rows, bm25_t: float, dense_t: float, rule: str) -> tuple[float, flo
 
 def main() -> int:
     rows = collect()
-    print(
-        f"{len(rows)} cases; present={sum(r[1] for r in rows)} absent={sum(not r[1] for r in rows)}"
-    )
+    print(f"{len(rows)} cases; present={sum(r[1] for r in rows)} absent={sum(not r[1] for r in rows)}")
     print("\nrule    bm25_t dense_t | presence_acc false_refusal hallucinated")
     best = None
     for rule in ("bm25", "dense", "either", "both"):
@@ -77,9 +75,7 @@ def main() -> int:
                 if best is None or score > best[0]:
                     best = (score, rule, bm25_t, dense_t, acc, fr, hp)
                 if rule in ("bm25", "dense") or dense_t in (0.70, 0.75) and bm25_t in (5.0, 7.0):
-                    print(
-                        f"{rule:7} {bm25_t:6.1f} {dense_t:7.2f} | {acc:11.0%} {fr:13.0%} {hp:12.0%}"
-                    )
+                    print(f"{rule:7} {bm25_t:6.1f} {dense_t:7.2f} | {acc:11.0%} {fr:13.0%} {hp:12.0%}")
     _, rule, bm25_t, dense_t, acc, fr, hp = best
     print(
         f"\nbest (false refusal <= 25%): rule={rule} bm25>={bm25_t} dense>={dense_t}"

@@ -73,9 +73,7 @@ class RetrievalReviewer:
         query = clause_query(clause_type)
         present, confidence = self._present(index, query)
         if not present:
-            return Finding.absent(
-                rationale="no chunk scored above the presence threshold", confidence=0.6
-            )
+            return Finding.absent(rationale="no chunk scored above the presence threshold", confidence=0.6)
         hits = index.search(query, k=self.config.top_k)
         spans = [h.chunk.as_span() for h in hits[: self.config.cite_top_n]]
         return Finding(
@@ -99,9 +97,7 @@ class LLMReviewer:
 
     name = "llm"
 
-    def __init__(
-        self, client=None, model: str | None = None, retrieval: RetrievalConfig | None = None
-    ):
+    def __init__(self, client=None, model: str | None = None, retrieval: RetrievalConfig | None = None):
         self.model = model or os.environ.get("CCR_LLM_MODEL", "claude-sonnet-4-5")
         self.retrieval = RetrievalReviewer(retrieval or RetrievalConfig(top_k=6))
         if client is None:
@@ -150,15 +146,11 @@ class LLMReviewer:
         index = self.retrieval._index(contract_text)
         hits = index.search(clause_query(clause_type), k=self.retrieval.config.top_k)
         answer = self._ask(question, [h.chunk.text for h in hits])
-        spans = (
-            self._ground(answer.get("quotes") or [], contract_text) if answer.get("present") else []
-        )
+        spans = self._ground(answer.get("quotes") or [], contract_text) if answer.get("present") else []
         if not spans:
             # Either the model said absent, or it said present but could not quote real text.
             return Finding.absent(
                 rationale=answer.get("reasoning", "") or "model found no verbatim evidence",
                 confidence=0.7,
             )
-        return Finding(
-            present=True, spans=spans, rationale=answer.get("reasoning", ""), confidence=0.8
-        )
+        return Finding(present=True, spans=spans, rationale=answer.get("reasoning", ""), confidence=0.8)

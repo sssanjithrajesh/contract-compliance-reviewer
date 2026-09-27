@@ -71,9 +71,25 @@ class AlwaysAbsent:
         return Finding.absent(rationale="baseline: always absent", confidence=1.0)
 
 
-REGISTRY: dict[str, type] = {
+def _retrieval(mode: str):
+    from reviewer.pipeline import RetrievalConfig, RetrievalReviewer
+
+    return RetrievalReviewer(RetrievalConfig(mode=mode))
+
+
+def _llm():
+    from reviewer.pipeline import LLMReviewer
+
+    return LLMReviewer()
+
+
+REGISTRY: dict[str, object] = {
     KeywordBaseline.name: KeywordBaseline,
     AlwaysAbsent.name: AlwaysAbsent,
+    "retrieval-bm25": lambda: _retrieval("bm25"),
+    "retrieval-dense": lambda: _retrieval("dense"),
+    "retrieval-hybrid": lambda: _retrieval("hybrid"),
+    "llm": _llm,
 }
 
 

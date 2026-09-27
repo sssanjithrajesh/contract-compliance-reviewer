@@ -20,3 +20,8 @@ build/
 .idea/
 .vscode/
 *.swp
+
+# Local databases and model cache
+data/*.db
+.fastembed_cache/
+

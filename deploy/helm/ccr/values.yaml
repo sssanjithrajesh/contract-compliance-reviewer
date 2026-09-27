@@ -1,0 +1,56 @@
+# Defaults are for a customer's private cluster. Override per environment with -f.
+
+image:
+  repository: ghcr.io/sssanjithrajesh/contract-compliance-reviewer
+  tag: "0.3.0"
+  pullPolicy: IfNotPresent
+
+customer: harlow-pryce
+
+# Air-gapped deployments set offline: true and provide no secrets.
+offline: false
+
+# Postgres connection. In a VPC this is usually a managed instance; the chart does not
+# deploy a database.
+database:
+  url: ""            # postgresql+psycopg://user:pass@host:5432/ccr  (or set existingSecret)
+  existingSecret: "" # secret with key DATABASE_URL
+
+secrets:
+  # Provide via --set or a values file kept out of git. Empty = integration disabled.
+  anthropicApiKey: ""
+  hubspotToken: ""
+  slackWebhookUrl: ""
+  slackSigningSecret: ""
+
+app:
+  replicas: 2
+  baseUrl: https://contracts.example.internal
+  reviewer: ""       # override engine; empty = customer YAML
+  resources:
+    requests: { cpu: 250m, memory: 768Mi }
+    limits:   { cpu: "1",  memory: 2Gi }
+
+sync:
+  enabled: true
+  intervalSeconds: 30
+  resources:
+    requests: { cpu: 50m, memory: 256Mi }
+    limits:   { cpu: 250m, memory: 512Mi }
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: nginx
+  host: contracts.example.internal
+  tls: true
+  # OIDC: terminate at the ingress (oauth2-proxy or the firm's IdP integration) and pass
+  # the identity header through. The app trusts X-Forwarded-User only when this is set.
+  annotations: {}
+
+networkPolicy:
+  # When offline is true, egress is denied except to the database.
+  enabled: true

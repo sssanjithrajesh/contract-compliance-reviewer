@@ -7,10 +7,10 @@ A lawyer uploads a messy contract. The system answers fifteen questions a partne
 and for every answer it either points at the exact text in the document or says
 **"not found"**. Nothing gets marked final without a human reviewer signing off.
 
-> Status: **Phase 2 of 4 - working reviewer with human review queue.** Retrieval runs
-> fully offline on a local model. LLM extraction is built and tested but unscored until
-> an API key is available. Every number below is produced by `uv run ccr-eval` and
-> committed; nothing is hand-typed.
+> Status: **Phase 3 of 4 - integrated and packaged.** Three MCP servers, HubSpot and
+> Slack write-back through a durable outbox, sub-agents for obligations and risk,
+> Docker Compose and a Helm chart, and an offline switch. Every number below is produced
+> by `uv run ccr-eval` and committed; nothing is hand-typed.
 
 ![Eval scorecard](docs/img/scorecard.svg)
 
@@ -88,10 +88,38 @@ flowchart LR
     end
 ```
 
-Built so far: Ingest (PDF/DOCX/TXT with page map), hybrid retrieval, refusal path,
-human review queue with audit trail, the Evals box, and the interfaces the remaining
-boxes must satisfy. LLM extraction is wired and tested behind an API key. MCP
-integrations are Phase 3.
+Every box above exists. LLM extraction and the LLM paths of the sub-agents are wired
+and tested against fake clients; they activate when `ANTHROPIC_API_KEY` is set and are
+unscored until then.
+
+### What happens when things break
+
+The integration layer is built around one rule: a lawyer's Approve never fails because
+HubSpot or Slack is slow. Writes go into a transactional outbox and a worker delivers
+them with backoff, jitter, Retry-After handling, and idempotency keys that survive a
+crash mid-write. The full failure-mode table, one row per way each system can fail, is in
+[docs/integrations.md](docs/integrations.md). The reasoning is in
+[ADR-0003](docs/adr/0003-outbox-and-mcp-boundaries.md).
+
+### For agents: MCP servers and a packaged skill
+
+| Server | Tools | Who gets it |
+|---|---|---|
+| `ccr-mcp-documents` | list, review, search, get findings, record a named decision | Associates (read), partners (decide) |
+| `ccr-mcp-crm` | look up matter, queue write-back, reconcile | Partners, integration jobs |
+| `ccr-mcp-notify` | post to the review channel | Partners |
+
+Roles per tool are declared in [`customers/harlow-pryce.yaml`](customers/harlow-pryce.yaml).
+A denied call returns `status: denied` with the reason instead of crashing the agent.
+The [`contract-review` skill](skills/contract-review/SKILL.md) tells an agent when to use
+these tools, the hard rules (cite or refuse, proposals are not final), and the eval hooks
+that gate any prompt change.
+
+### Second customer is a YAML file
+
+Everything customer-specific (clause list, engine, integrations, roles, ROI inputs) lives
+in `customers/<id>.yaml`. The code does not know which customer it serves. Phase 4 adds a
+healthcare policy reviewer as a second file.
 
 ## The eval set is the spec
 
@@ -141,10 +169,23 @@ uv run ccr-build-evals                   # rebuild the eval set from CUAD (deter
 uv run python -m scripts.calibrate_thresholds   # the sweep behind ADR-0002
 ```
 
+```bash
+uv run ccr-sync                          # drain the integration outbox once, then reconcile
+uv run ccr-mcp-documents                 # MCP server over stdio (also: ccr-mcp-crm, ccr-mcp-notify)
+CCR_OFFLINE=1 uv run ccr-serve           # air-gapped: local engine, all outbound calls refused
+
+cp .env.example .env && docker compose up --build     # app + outbox worker + Postgres
+helm install ccr deploy/helm/ccr --set database.url=postgresql+psycopg://...   # customer VPC
+```
+
 Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). The embedding model
-(~130 MB) downloads once and is cached; after that nothing leaves the machine.
-`--reviewer llm` needs `ANTHROPIC_API_KEY`. Set `CCR_REVIEWER` to choose the engine the
-web app runs on upload, and `DATABASE_URL` to point at Postgres instead of the default SQLite.
+(~130 MB) downloads once and is cached; the Docker image bakes it in so containers start
+offline. `--reviewer llm` needs `ANTHROPIC_API_KEY`. `CCR_CUSTOMER` selects the customer
+YAML; `CCR_REVIEWER` overrides the engine; `DATABASE_URL` points at Postgres instead of
+the default SQLite. See [`.env.example`](.env.example) for every variable.
+
+> Docker Compose and the Helm chart are written and reviewed but not yet exercised on a
+> cluster; that is the first item in Phase 4 and will get its own post-mortem if it breaks.
 
 ## Repository map
 
@@ -157,7 +198,15 @@ src/reviewer/        the system under test
   chunking.py          paragraph-aware chunks that keep character offsets
   retrieval.py         BM25, local dense (bge-small via fastembed), and RRF hybrid
   pipeline.py          RetrievalReviewer (offline) and LLMReviewer (grounded quotes only)
+  agents.py            sub-agents: clause extractor, obligation checker, risk summarizer
+  config.py            customer YAML loader, offline switch, secrets accessors
   app/                 FastAPI review queue: upload, propose, approve/reject, export
+  integrations/        http client (retry/jitter/Retry-After/offline), outbox, HubSpot, Slack, sync
+  mcp/                 three MCP servers with per-tool role checks and graceful degradation
+customers/           one YAML per customer; the code does not know which one it serves
+skills/contract-review/  packaged skill: when to use, hard rules, tools, procedure, eval hooks
+deploy/helm/ccr/     Helm chart: app, sync worker, secrets, egress NetworkPolicy, ingress
+Dockerfile, docker-compose.yml, .env.example
 evals/
   schema.py            eval case format, loader, span verification
   scoring.py           the five metrics
@@ -180,15 +229,16 @@ docs/
 | Phase | Deliverable | Proof |
 |---|---|---|
 | 1 (done) | Eval set, harness, CI gate, interfaces, engagement docs | Baseline row in the progression table |
-| 2 (now) | Ingest, hybrid retrieval, refusal, human-review queue, LLM extraction (behind key) | Scorecard climbed 62% to 82% presence, 61% to 24% hallucination; ADR-0002 |
-| 3 | MCP servers (document store, HubSpot, Slack), sub-agents, packaged review skill, Docker Compose, air-gapped flag | Integration write-up: what broke and how it degrades |
-| 4 | Public deploy, post-mortem, runbook, 3-min demo, second customer (healthcare policy reviewer via config) | Same codebase, different YAML, different domain |
+| 2 (done) | Ingest, hybrid retrieval, refusal, human-review queue, LLM extraction (behind key) | Scorecard climbed 62% to 82% presence, 61% to 24% hallucination; ADR-0002 |
+| 3 (now) | MCP servers, outbox + HubSpot + Slack, sub-agents, packaged skill, customer YAML, Compose + Helm, offline switch | 48 tests incl. fakes for every failure mode; docs/integrations.md; ADR-0003 |
+| 4 | Deploy for real, post-mortem, runbook, 3-min demo, second customer (healthcare policy reviewer via config), OIDC | Same codebase, different YAML, different domain |
 
 ## Engagement documents
 
 - [Discovery memo](engagement/discovery-memo.md): the customer, their current process, and where the hours go.
 - [Scope](engagement/scope.md): what ships, what does not, and how success is measured.
 - [Architecture decisions](docs/adr/): every significant choice with the alternatives that lost.
+- [Integrations and failure modes](docs/integrations.md): one row per way each system can break.
 
 ## Data and licensing
 

@@ -7,7 +7,7 @@ considered, not just the winner, what the choice cost, and what would make us re
 |---|---|---|
 | [0000](0000-template.md) | Template | - |
 | [0001](0001-eval-set-before-system.md) | Build the eval set before the system, from CUAD, with absent cases | Accepted |
+| [0002](0002-retrieval-architecture.md) | Hybrid BM25 + local dense retrieval; presence if either signal clears its bar | Accepted |
 
-Upcoming: retrieval architecture (BM25 vs vector vs hybrid vs full-document prompting),
-citation representation (character spans vs page/paragraph), refusal threshold policy,
-integration transport (MCP vs direct SDK).
+Upcoming: LLM extraction prompt and grounding policy, integration transport (MCP vs
+direct SDK), offline model choice, storage (SQLite pilot vs Postgres/pgvector).

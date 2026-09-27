@@ -7,12 +7,35 @@ A lawyer uploads a messy contract. The system answers fifteen questions a partne
 and for every answer it either points at the exact text in the document or says
 **"not found"**. Nothing gets marked final without a human reviewer signing off.
 
-> Status: **Phase 1 of 4 - eval set and harness.** The number below is a deliberately
-> dumb keyword baseline. It is the floor every later version has to beat, in public.
+> Status: **Phase 2 of 4 - working reviewer with human review queue.** Retrieval runs
+> fully offline on a local model. LLM extraction is built and tested but unscored until
+> an API key is available. Every number below is produced by `uv run ccr-eval` and
+> committed; nothing is hand-typed.
 
 ![Eval scorecard](docs/img/scorecard.svg)
 
-Full per-clause table: [docs/scorecard.md](docs/scorecard.md). Regenerated on every run of `uv run ccr-eval`.
+### Progression so far
+
+| Version | Presence accuracy | Span recall | Citation precision | False refusal | Hallucinated presence |
+|---|---:|---:|---:|---:|---:|
+| Keyword baseline (Phase 1) | 62% | 35% | 17% | 9% | **61%** |
+| Retrieval, BM25 only | 82% | 57% | 36% | 11% | 24% |
+| **Retrieval, hybrid (current)** | **82%** | **62%** | **38%** | **9%** | **24%** |
+| Retrieval + LLM extraction | pending API key | | | | |
+
+Citation precision is the known weak spot: retrieval cites whole paragraphs, the
+annotated clause is one or two sentences inside them. That is the LLM extraction step's
+job ([ADR-0002](docs/adr/0002-retrieval-architecture.md) explains the tradeoff).
+
+Full per-clause table: [docs/scorecard.md](docs/scorecard.md).
+
+### The review queue
+
+![Review queue for one contract](docs/img/review-queue.png)
+
+Every finding is either cited to a page and character range or marked "not found".
+Nothing is final until a named person approves or rejects it; the decision, name, and
+note are stored and exported with the review.
 
 ---
 
@@ -65,7 +88,10 @@ flowchart LR
     end
 ```
 
-Phase 1 (this commit) is the **Evals** box plus the interfaces every other box must satisfy.
+Built so far: Ingest (PDF/DOCX/TXT with page map), hybrid retrieval, refusal path,
+human review queue with audit trail, the Evals box, and the interfaces the remaining
+boxes must satisfy. LLM extraction is wired and tested behind an API key. MCP
+integrations are Phase 3.
 
 ## The eval set is the spec
 
@@ -106,13 +132,19 @@ document fails the test suite.
 
 ```bash
 uv sync --extra dev
-uv run pytest                       # schema, scoring, and eval-set integrity tests
-uv run ccr-eval                     # score the keyword baseline, regenerate chart + table
-uv run ccr-eval --gate              # what CI runs: fail on regression vs evals/gate.json
-uv run ccr-build-evals              # rebuild the eval set from CUAD (deterministic seed)
+uv run pytest                            # unit, app, and eval-set integrity tests
+uv run ccr-serve                         # review queue at http://127.0.0.1:8000
+uv run ccr-eval                          # score the production reviewer, regenerate chart + table
+uv run ccr-eval --reviewer keyword       # or: retrieval-bm25, retrieval-dense, retrieval-hybrid, llm
+uv run ccr-eval --gate                   # what CI runs: fail on regression vs evals/gate.json
+uv run ccr-build-evals                   # rebuild the eval set from CUAD (deterministic seed)
+uv run python -m scripts.calibrate_thresholds   # the sweep behind ADR-0002
 ```
 
-Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). No API keys needed for Phase 1.
+Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). The embedding model
+(~130 MB) downloads once and is cached; after that nothing leaves the machine.
+`--reviewer llm` needs `ANTHROPIC_API_KEY`. Set `CCR_REVIEWER` to choose the engine the
+web app runs on upload, and `DATABASE_URL` to point at Postgres instead of the default SQLite.
 
 ## Repository map
 
@@ -120,7 +152,12 @@ Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). No API keys needed f
 src/reviewer/        the system under test
   interfaces.py        Finding / Span / Reviewer protocol - the contract every version honours
   clauses.py           the 15 clause types, their plain-English questions, and why each matters
-  baselines.py         keyword baseline (the floor) and always-absent (harness sanity check)
+  baselines.py         keyword baseline (the floor), always-absent (sanity), and the reviewer registry
+  ingest.py            PDF / DOCX / TXT to text + page map; detects scans with no text layer
+  chunking.py          paragraph-aware chunks that keep character offsets
+  retrieval.py         BM25, local dense (bge-small via fastembed), and RRF hybrid
+  pipeline.py          RetrievalReviewer (offline) and LLMReviewer (grounded quotes only)
+  app/                 FastAPI review queue: upload, propose, approve/reject, export
 evals/
   schema.py            eval case format, loader, span verification
   scoring.py           the five metrics
@@ -142,8 +179,8 @@ docs/
 
 | Phase | Deliverable | Proof |
 |---|---|---|
-| 1 (now) | Eval set, harness, CI gate, interfaces, engagement docs | This README's chart |
-| 2 | Hybrid retrieval + reranking + LLM extraction with citations, human-review queue, FastAPI + React | Scorecard climbs from baseline; ADR-001 retrieval choice |
+| 1 (done) | Eval set, harness, CI gate, interfaces, engagement docs | Baseline row in the progression table |
+| 2 (now) | Ingest, hybrid retrieval, refusal, human-review queue, LLM extraction (behind key) | Scorecard climbed 62% to 82% presence, 61% to 24% hallucination; ADR-0002 |
 | 3 | MCP servers (document store, HubSpot, Slack), sub-agents, packaged review skill, Docker Compose, air-gapped flag | Integration write-up: what broke and how it degrades |
 | 4 | Public deploy, post-mortem, runbook, 3-min demo, second customer (healthcare policy reviewer via config) | Same codebase, different YAML, different domain |
 

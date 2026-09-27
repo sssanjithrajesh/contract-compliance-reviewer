@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  FASTEMBED_CACHE_PATH: ${{ github.workspace }}/.fastembed_cache
+
 jobs:
   test-and-eval:
     runs-on: ubuntu-latest
@@ -15,17 +18,26 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Cache local embedding model
+        uses: actions/cache@v4
+        with:
+          path: .fastembed_cache
+          key: fastembed-bge-small-en-v1.5
+
       - name: Install
         run: uv sync --extra dev
 
       - name: Lint
         run: uv run ruff check .
 
-      - name: Unit and eval-set integrity tests
+      - name: Unit, app, and eval-set integrity tests
         run: uv run pytest
 
-      - name: Eval regression gate
+      - name: Eval regression gate (production reviewer)
         run: uv run ccr-eval --gate --no-report
+
+      - name: Baseline still scores lower than production (sanity)
+        run: uv run ccr-eval --reviewer keyword --no-report
 
       - name: Upload scorecard
         if: always()

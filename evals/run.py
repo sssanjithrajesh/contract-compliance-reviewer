@@ -1,7 +1,7 @@
 """Run the eval set against a reviewer and (optionally) enforce the CI regression gate.
 
-    uv run ccr-eval                          # keyword baseline, print scorecard
-    uv run ccr-eval --reviewer keyword --gate # fail if below evals/gate.json thresholds
+    uv run ccr-eval                          # production reviewer, print scorecard
+    uv run ccr-eval --gate                   # fail if below evals/gate.json thresholds
     uv run ccr-eval --update-gate            # promote current numbers to the gate
 
 The gate is a floor, not a target. It exists so nobody can merge a change that makes the
@@ -71,7 +71,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--reviewer", default="keyword")
+    parser.add_argument("--reviewer", default="retrieval-hybrid")
     parser.add_argument("--gate", action="store_true", help="fail if below evals/gate.json")
     parser.add_argument(
         "--update-gate", action="store_true", help="write current overall metrics to gate"

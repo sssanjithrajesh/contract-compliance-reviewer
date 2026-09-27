@@ -1,0 +1,289 @@
+contract: tuniucorp-cooperation-agreement
+title: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT
+cases:
+- id: tuniucorp-cooperation-agreement__renewal_term
+  contract: tuniucorp-cooperation-agreement
+  clause_type: renewal_term
+  question: Does the contract renew, and how?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Renewal Term
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__governing_law
+  contract: tuniucorp-cooperation-agreement
+  clause_type: governing_law
+  question: Which jurisdiction's law governs this contract?
+  expected:
+    present: true
+    spans:
+    - start: 11232
+      end: 11609
+      text: This Agreement shall be governed by and interpreted pursuant to the laws of the People's Republic
+        of China that are promulgated and are publicly available, provided that the general international
+        business practices shall apply if the laws of the People's Republic of China that are promulgated
+        and are publicly available do not involve any matter in relation to this Agreement.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Governing Law
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__most_favored_nation
+  contract: tuniucorp-cooperation-agreement
+  clause_type: most_favored_nation
+  question: Is there a most-favored-nation pricing clause?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Most Favored Nation
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__non_compete
+  contract: tuniucorp-cooperation-agreement
+  clause_type: non_compete
+  question: Is either party restricted from competing?
+  expected:
+    present: true
+    spans:
+    - start: 3588
+      end: 4022
+      text: Party A irrevocably undertakes that, without Party B's consent, Party A shall not conduct
+        any other business or make any commercial arrangement, including without limitation being engaged
+        in or otherwise participating in any commercial activities and businesses independently or together
+        with any other person or entity, nor shall it carry out any activities that may be competitive
+        with or cause adverse effect to Party B's business.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Non-Compete
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__exclusivity
+  contract: tuniucorp-cooperation-agreement
+  clause_type: exclusivity
+  question: Does this contract grant exclusivity to either party?
+  expected:
+    present: true
+    spans:
+    - start: 2948
+      end: 3167
+      text: Party A irrevocably undertakes that Party A will take Party B as its exclusive and sole partner
+        to provide the business consultancy and technical services as well as technical consultancy to
+        Party A and its subsidiaries
+    - start: 3169
+      end: 3393
+      text: Party A shall not establish any same or similar cooperative relationship with any third party
+        in respect of such businesses nor shall it make any same or similar arrangement, unless with the
+        prior written consent of Party B.
+    - start: 3588
+      end: 4022
+      text: Party A irrevocably undertakes that, without Party B's consent, Party A shall not conduct
+        any other business or make any commercial arrangement, including without limitation being engaged
+        in or otherwise participating in any commercial activities and businesses independently or together
+        with any other person or entity, nor shall it carry out any activities that may be competitive
+        with or cause adverse effect to Party B's business.
+    - start: 3401
+      end: 3580
+      text: Party A irrevocably undertakes that it will make best efforts to assist and endeavor to achieve
+        the exclusive operation of thecooperative business to the extent permitted by laws.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Exclusivity
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: tuniucorp-cooperation-agreement__termination_for_convenience
+  contract: tuniucorp-cooperation-agreement
+  clause_type: termination_for_convenience
+  question: Can either party terminate without cause, and on what notice?
+  expected:
+    present: true
+    spans:
+    - start: 7316
+      end: 7526
+      text: Party B shall have the right to terminate this Agreement in advance without the prior written
+        consent from Party A, bysending a written notice to Party A but Party A may not terminate or rescind
+        this Agreement;
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Termination For Convenience
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__change_of_control
+  contract: tuniucorp-cooperation-agreement
+  clause_type: change_of_control
+  question: Does a change of control trigger any rights or obligations?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Change Of Control
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__anti_assignment
+  contract: tuniucorp-cooperation-agreement
+  clause_type: anti_assignment
+  question: Is assignment of the contract restricted?
+  expected:
+    present: true
+    spans:
+    - start: 13987
+      end: 14128
+      text: The rights and obligations of each Party under this Agreement shall not be transferred, except
+        for the transfer by Party B to its affiliates.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Anti-Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__minimum_commitment
+  contract: tuniucorp-cooperation-agreement
+  clause_type: minimum_commitment
+  question: Is there a minimum purchase or volume commitment?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Minimum Commitment
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__ip_ownership_assignment
+  contract: tuniucorp-cooperation-agreement
+  clause_type: ip_ownership_assignment
+  question: Does either party assign IP ownership to the other?
+  expected:
+    present: true
+    spans:
+    - start: 14141
+      end: 14935
+      text: The Parties agree that any and all intellectual property researched and developed, created
+        and invented by the Parties (including their employees) in the course of performance of this Agreement
+        shall be owned by Party B. For the purpose of this Article 12.3, "Intellectual Property" means
+        the patent, patent application right, trademark, service mark, logo, image, trade name, internet
+        domain name, design right, copyright (including copyright of computer software) and moral rights,
+        database right, right of semiconductor design drawing, utility model, proprietary technology and
+        other intellectual property that are registered and unregistered including those that have applied
+        for registration, as well as all other rights or protection methods with same or similar effect
+        on a global scope.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Ip Ownership Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__audit_rights
+  contract: tuniucorp-cooperation-agreement
+  clause_type: audit_rights
+  question: Does either party have the right to audit the other?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Audit Rights
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__uncapped_liability
+  contract: tuniucorp-cooperation-agreement
+  clause_type: uncapped_liability
+  question: Are there carve-outs where liability is uncapped?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Uncapped Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__cap_on_liability
+  contract: tuniucorp-cooperation-agreement
+  clause_type: cap_on_liability
+  question: Is there a cap on either party's liability?
+  expected:
+    present: true
+    spans:
+    - start: 10654
+      end: 10809
+      text: Notwithstanding the foregoing provisions, neither Party shall be responsible to the other
+        Party in respect of any indirect loss or damage caused hereunder.
+    - start: 10817
+      end: 11010
+      text: The demand for liquidated damages and specific performance in respect of any breach during
+        the Term of Cooperation are all remedies that the non-breaching Party shall have under this Agreement.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Cap On Liability
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__liquidated_damages
+  contract: tuniucorp-cooperation-agreement
+  clause_type: liquidated_damages
+  question: Are there liquidated damages provisions?
+  expected:
+    present: true
+    spans:
+    - start: 6486
+      end: 6889
+      text: Except as otherwise agreed hereunder, if Party A or its subsidiaries fail to pay the Service
+        Fee in full on schedule according to provisions of Article 4.1 and Article 4.2, then Party A or
+        its subsidiaries shall, in addition to the continuance of the payment of Service Fee in full,
+        it shall pay Party B the liquidated damages at a daily interest rate of 0.03% in respect of the
+        outstanding Service Fee.
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Liquidated Damages
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: tuniucorp-cooperation-agreement__insurance
+  contract: tuniucorp-cooperation-agreement
+  clause_type: insurance
+  question: Is either party required to maintain insurance?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TUNIUCORP_03_06_2014-EX-10-COOPERATION AGREEMENT__Insurance
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium

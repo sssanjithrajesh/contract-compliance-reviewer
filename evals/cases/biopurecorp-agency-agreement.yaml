@@ -1,0 +1,312 @@
+contract: biopurecorp-agency-agreement
+title: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT
+cases:
+- id: biopurecorp-agency-agreement__renewal_term
+  contract: biopurecorp-agency-agreement
+  clause_type: renewal_term
+  question: Does the contract renew, and how?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Renewal Term
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__governing_law
+  contract: biopurecorp-agency-agreement
+  clause_type: governing_law
+  question: Which jurisdiction's law governs this contract?
+  expected:
+    present: true
+    spans:
+    - start: 33184
+      end: 33448
+      text: This Agreement and all related business transactions will be governed by the laws of the Commonwealth
+        of Massachusetts (without reference to principles of conflicts or choice of law which would cause
+        the application of the internal laws of any other jurisdiction).
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Governing Law
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: biopurecorp-agency-agreement__most_favored_nation
+  contract: biopurecorp-agency-agreement
+  clause_type: most_favored_nation
+  question: Is there a most-favored-nation pricing clause?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Most Favored Nation
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__non_compete
+  contract: biopurecorp-agency-agreement
+  clause_type: non_compete
+  question: Is either party restricted from competing?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Non-Compete
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__exclusivity
+  contract: biopurecorp-agency-agreement
+  clause_type: exclusivity
+  question: Does this contract grant exclusivity to either party?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Exclusivity
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__termination_for_convenience
+  contract: biopurecorp-agency-agreement
+  clause_type: termination_for_convenience
+  question: Can either party terminate without cause, and on what notice?
+  expected:
+    present: true
+    spans:
+    - start: 27636
+      end: 27871
+      text: Either party may, at its option, terminate this Agreement       without cause, effective at
+        any time after January 31, 1999, upon giving       at least ninety (90) days prior written notice
+        of such termination to the       other party.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Termination For Convenience
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: biopurecorp-agency-agreement__change_of_control
+  contract: biopurecorp-agency-agreement
+  clause_type: change_of_control
+  question: Does a change of control trigger any rights or obligations?
+  expected:
+    present: true
+    spans:
+    - start: 27258
+      end: 27508
+      text: In the event of any material change in the organization,       ownership, management or control
+        of the business of the Agent, the Company       may, at its option, terminate this Agreement upon
+        giving written notice of       termination to the Agent.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Change Of Control
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: biopurecorp-agency-agreement__anti_assignment
+  contract: biopurecorp-agency-agreement
+  clause_type: anti_assignment
+  question: Is assignment of the contract restricted?
+  expected:
+    present: true
+    spans:
+    - start: 31519
+      end: 31686
+      text: Neither party will not assign or otherwise transfer any of its rights or obligations under
+        this Agreement without the express prior written consent of the other party.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Anti-Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: biopurecorp-agency-agreement__minimum_commitment
+  contract: biopurecorp-agency-agreement
+  clause_type: minimum_commitment
+  question: Is there a minimum purchase or volume commitment?
+  expected:
+    present: true
+    spans:
+    - start: 4324
+      end: 4419
+      text: Except as otherwise expressly provided in the Business Plan, the Agent will at its sole expense
+    - start: 13983
+      end: 14074
+      text: All orders will be shipped to the Customer in minimum quantities of one box (two (2) bags).
+    - start: 8021
+      end: 8386
+      text: "(i) make all field sales representatives of the Agent available to       work with field\
+        \ sales representatives of the Company at least two (2) full       business days per agreement\
+        \ year.\n\n         (j) maintain sales and promotion of the Company's Products so as to      \
+        \ meet or exceed the previous years annual sales within the same competitive       environment."
+    - start: 7514
+      end: 7964
+      text: (h) make all field sales personnel of the Agent available for at       least four (4) hours,
+        and telesales personnel available for at least one       (1) hour, of initial Products sales and
+        marketing training by the Company,       and for such supplemental training by the Company as
+        the Company may deem       appropriate from time to time, in each case, at such times and locations       as
+        may be mutually agreed upon by the Company and the Agent.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Minimum Commitment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: biopurecorp-agency-agreement__ip_ownership_assignment
+  contract: biopurecorp-agency-agreement
+  clause_type: ip_ownership_assignment
+  question: Does either party assign IP ownership to the other?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Ip Ownership Assignment
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__audit_rights
+  contract: biopurecorp-agency-agreement
+  clause_type: audit_rights
+  question: Does either party have the right to audit the other?
+  expected:
+    present: true
+    spans:
+    - start: 4324
+      end: 4419
+      text: Except as otherwise expressly provided in the Business Plan, the Agent will at its sole expense
+    - start: 6331
+      end: 6929
+      text: (f) meet with the Company at least once each quarter (starting with       the quarter in which
+        the Agent Launch Date occurs), at a mutually       agreeable time and place to discuss and review
+        the Agent's activities       hereunder, at which meeting the Agent will make available to the
+        Company       information concerning the Agent's sale and marketing of the Products in       the
+        Territory during the quarter and year-to-date, such information to       include details of sales
+        efforts, Product sales volume and such other       information as may be mutually agreed upon
+        in each Business Plan;
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Audit Rights
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: biopurecorp-agency-agreement__uncapped_liability
+  contract: biopurecorp-agency-agreement
+  clause_type: uncapped_liability
+  question: Are there carve-outs where liability is uncapped?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Uncapped Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__cap_on_liability
+  contract: biopurecorp-agency-agreement
+  clause_type: cap_on_liability
+  question: Is there a cap on either party's liability?
+  expected:
+    present: true
+    spans:
+    - start: 21640
+      end: 21723
+      text: In no       way should the Agent be liable for incidental or consequential damages.
+    - start: 16861
+      end: 16940
+      text: In no event will the Company be liable for incidental or consequential damages.
+    - start: 20886
+      end: 21639
+      text: Subject to Subparagraph (c) below, the Agent will indemnify the       Company (and its officers,
+        directors, employees, agents and affiliates)       and hold it (and them) harmless from and against
+        all loss, damage,       liability, cost or expense of any nature whatsoever, including, without       limitation,
+        any and all reasonable attorneys fees and court costs       (together, a "Loss"), arising out
+        of or in connection with (i) the       inaccuracy or breach of any representation, warranty or
+        obligation of the       Agent hereunder and/or (ii) the activities of the Agent in connection
+        with       the promotion, sale or collection of payment of the Products in violation       of
+        this Agreement, law or any other duty or obligation of the Agent.
+    - start: 29932
+      end: 30084
+      text: In no event will either party be       liable for special or consequential damages arising
+        out of the breach or       the termination of this Agreement.
+    - start: 16629
+      end: 16860
+      text: The Customer's exclusive remedy for a breach of any of the foregoing warranties will be the
+        replacement, at the delivery point thereof, freight prepaid, of any Product furnished hereunder
+        that fails to meet the foregoing standards.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Cap On Liability
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: biopurecorp-agency-agreement__liquidated_damages
+  contract: biopurecorp-agency-agreement
+  clause_type: liquidated_damages
+  question: Are there liquidated damages provisions?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Liquidated Damages
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: biopurecorp-agency-agreement__insurance
+  contract: biopurecorp-agency-agreement
+  clause_type: insurance
+  question: Is either party required to maintain insurance?
+  expected:
+    present: true
+    spans:
+    - start: 18920
+      end: 20286
+      text: The Company and the Agent will each maintain, at their own expense, insurance with reputable
+        insurers, such insurance to be in such form and amounts as are customary in the case of entities
+        of established reputation engaged in the same or similar businesses and similarly situated, provided
+        that such insurance will in any event include commercial general liability and umbrella liability
+        insurance (including product liability coverage) for property damage, bodily injury and personal
+        injury in an amount not less than Five Million Dollars ($5,000,000) combined single amount per
+        occurrence and in the aggregate. Each such liability insurance policy of the Agent will name the
+        Company (as its interest may appear) as an additional insured under the policy and provide for
+        at least thirty (30) days prior written notice to the Company of any cancellation, modification
+        or amendment of the policy. Each product liability insurance policy of the Company will name the
+        Agent (as its interest may appear) as an additional insured under the policy and provide for at
+        least thirty (30) days prior written notice to the Agent of any cancellation, modification, or
+        amendment of this policy. Each party will furnish to the other upon request a Certificate of Insurance
+        or other documentation reasonably satisfactory to the other evidencing compliance with this Paragraph
+        3.3.
+  source:
+    dataset: cuad
+    id: BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT__Insurance
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium

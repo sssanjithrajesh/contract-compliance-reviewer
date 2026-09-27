@@ -1,0 +1,279 @@
+contract: hfenterprisesinc-development-agreement
+title: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement
+cases:
+- id: hfenterprisesinc-development-agreement__renewal_term
+  contract: hfenterprisesinc-development-agreement
+  clause_type: renewal_term
+  question: Does the contract renew, and how?
+  expected:
+    present: true
+    spans:
+    - start: 2484
+      end: 2685
+      text: The Initial Term shall automatically renew for one-month periods thereafter unless either
+        party provides 30- days advance notice of termination, unless earlier terminated pursuant to Section
+        2.2 hereof
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Renewal Term
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__governing_law
+  contract: hfenterprisesinc-development-agreement
+  clause_type: governing_law
+  question: Which jurisdiction's law governs this contract?
+  expected:
+    present: true
+    spans:
+    - start: 16616
+      end: 16748
+      text: This Agreement shall be governed in accordance with the laws of the State of New York without
+        regard to conflict of laws principles.
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Governing Law
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__most_favored_nation
+  contract: hfenterprisesinc-development-agreement
+  clause_type: most_favored_nation
+  question: Is there a most-favored-nation pricing clause?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Most Favored Nation
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__non_compete
+  contract: hfenterprisesinc-development-agreement
+  clause_type: non_compete
+  question: Is either party restricted from competing?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Non-Compete
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__exclusivity
+  contract: hfenterprisesinc-development-agreement
+  clause_type: exclusivity
+  question: Does this contract grant exclusivity to either party?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Exclusivity
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__termination_for_convenience
+  contract: hfenterprisesinc-development-agreement
+  clause_type: termination_for_convenience
+  question: Can either party terminate without cause, and on what notice?
+  expected:
+    present: true
+    spans:
+    - start: 2868
+      end: 3544
+      text: 'Either party may terminate this Agreement prior to expiration of the Term: (i) upon thirty
+        (30) days prior written notice, or (ii) immediately upon written notice to the other party if:
+        (a) the other party declares or a petition is filed in any court for insolvency or bankruptcy
+        and such petition is not dismissed in thirty (30) days; (b) the other party reorganizes under
+        the relevant bankruptcy act or any similar statute in such party''s jurisdiction of incorporation;
+        (c) the other party consents to the appointment of a trustee in bankruptcy or a receiver or similar
+        entity; or (d) the Developer breaches DSS''s Technology or Intellectual Property rights contained
+        herein.'
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Termination For
+      Convenience
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__change_of_control
+  contract: hfenterprisesinc-development-agreement
+  clause_type: change_of_control
+  question: Does a change of control trigger any rights or obligations?
+  expected:
+    present: true
+    spans:
+    - start: 11866
+      end: 12218
+      text: The rights of Developer under this Agreement shall immediately cease and be terminated upon
+        the sale or transfer of no less than a majority of, or a controlling interest in or over, the
+        voting capital or ownership capital of Developer unless an assignment of such rights pursuant
+        to such sale or transfer has been previously approved in writing by DSS.
+    - start: 11580
+      end: 11865
+      text: The rights of Developer under this Agreement shall immediately cease and be terminated upon
+        the sale or transfer of all or substantially all of the assets of Developer unless an assignment
+        of such rights pursuant to such sale or transfer has been previously approved in writing by DSS.
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Change Of Control
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__anti_assignment
+  contract: hfenterprisesinc-development-agreement
+  clause_type: anti_assignment
+  question: Is assignment of the contract restricted?
+  expected:
+    present: true
+    spans:
+    - start: 11866
+      end: 12218
+      text: The rights of Developer under this Agreement shall immediately cease and be terminated upon
+        the sale or transfer of no less than a majority of, or a controlling interest in or over, the
+        voting capital or ownership capital of Developer unless an assignment of such rights pursuant
+        to such sale or transfer has been previously approved in writing by DSS.
+    - start: 11137
+      end: 11402
+      text: Developer may not assign or transfer this Agreement, nor its rights and obligations hereunder,
+        by operation of law or otherwise, to any third party without the prior express written approval
+        of DSS. Any purported assignment without the consent of DSS shall be void.
+    - start: 11580
+      end: 11865
+      text: The rights of Developer under this Agreement shall immediately cease and be terminated upon
+        the sale or transfer of all or substantially all of the assets of Developer unless an assignment
+        of such rights pursuant to such sale or transfer has been previously approved in writing by DSS.
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Anti-Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: hfenterprisesinc-development-agreement__minimum_commitment
+  contract: hfenterprisesinc-development-agreement
+  clause_type: minimum_commitment
+  question: Is there a minimum purchase or volume commitment?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Minimum Commitment
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__ip_ownership_assignment
+  contract: hfenterprisesinc-development-agreement
+  clause_type: ip_ownership_assignment
+  question: Does either party assign IP ownership to the other?
+  expected:
+    present: true
+    spans:
+    - start: 5002
+      end: 5204
+      text: Developer hereby assigns and shall assign in the future to DSS all rights it may acquire by
+        operation of law or otherwise in the Technology or Improvements, along with the goodwill associated
+        therewith.
+    - start: 4034
+      end: 4332
+      text: Subject to Developer's expressly granted rights under this Agreement, Developer acknowledges
+        and agrees that DSS shall own all right, title, and interest in and to the Technology, the Improvements,
+        its Intellectual Property, and all future derivative works derived therefrom or developed hereunder.
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Ip Ownership Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__audit_rights
+  contract: hfenterprisesinc-development-agreement
+  clause_type: audit_rights
+  question: Does either party have the right to audit the other?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Audit Rights
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__uncapped_liability
+  contract: hfenterprisesinc-development-agreement
+  clause_type: uncapped_liability
+  question: Are there carve-outs where liability is uncapped?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Uncapped Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__cap_on_liability
+  contract: hfenterprisesinc-development-agreement
+  clause_type: cap_on_liability
+  question: Is there a cap on either party's liability?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Cap On Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__liquidated_damages
+  contract: hfenterprisesinc-development-agreement
+  clause_type: liquidated_damages
+  question: Are there liquidated damages provisions?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Liquidated Damages
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: hfenterprisesinc-development-agreement__insurance
+  contract: hfenterprisesinc-development-agreement
+  clause_type: insurance
+  question: Is either party required to maintain insurance?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: HfEnterprisesInc_20191223_S-1_EX-10.22_11931299_EX-10.22_Development Agreement__Insurance
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium

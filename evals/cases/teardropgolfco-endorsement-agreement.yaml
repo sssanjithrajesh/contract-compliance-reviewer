@@ -1,0 +1,268 @@
+contract: teardropgolfco-endorsement-agreement
+title: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT
+cases:
+- id: teardropgolfco-endorsement-agreement__renewal_term
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: renewal_term
+  question: Does the contract renew, and how?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Renewal Term
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__governing_law
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: governing_law
+  question: Which jurisdiction's law governs this contract?
+  expected:
+    present: true
+    spans:
+    - start: 23010
+      end: 23331
+      text: This Agreement shall be governed by and construed in accordance with the laws of the Commonwealth
+        of Virginia applicable to contracts entered into and wholly to be performed within the Commonwealth
+        of Virginia and, in the event of any litigation arising out of this Agreement, venue shall be
+        the Commonwealth of Virginia.
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Governing Law
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__most_favored_nation
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: most_favored_nation
+  question: Is there a most-favored-nation pricing clause?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Most Favored Nation
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__non_compete
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: non_compete
+  question: Is either party restricted from competing?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Non-Compete
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__exclusivity
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: exclusivity
+  question: Does this contract grant exclusivity to either party?
+  expected:
+    present: true
+    spans:
+    - start: 3492
+      end: 3812
+      text: Subject to the terms and conditions set forth herein, Consolidated Artists grants to TPC the
+        exclusive right and license, within the Contract Territory and during the Contract Period, to
+        use the Ogle Endorsement in connection with the manufacture, distribution, advertisement, promotion
+        and sale of the Endorsed Product.
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Exclusivity
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__termination_for_convenience
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: termination_for_convenience
+  question: Can either party terminate without cause, and on what notice?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Termination For Convenience
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__change_of_control
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: change_of_control
+  question: Does a change of control trigger any rights or obligations?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Change Of Control
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__anti_assignment
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: anti_assignment
+  question: Is assignment of the contract restricted?
+  expected:
+    present: true
+    spans:
+    - start: 21093
+      end: 21197
+      text: Neither TPC nor Consolidated Artists shall have any right to grant sublicenses hereunder or
+        to otherwise
+    - start: 21247
+      end: 21541
+      text: assign, transfer, alienate, encumber or hypothecate any of its rights or obligations hereunder
+        without the express prior written consent of the other party, except that Consolidated Artists
+        shall have the right to assign the financial benefits hereof and TPC hereby consents to such assignment.
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Anti-Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__minimum_commitment
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: minimum_commitment
+  question: Is there a minimum purchase or volume commitment?
+  expected:
+    present: true
+    spans:
+    - start: 12844
+      end: 13199
+      text: TPC agrees to guarantee to Consolidated Artists on behalf of Ogle a minimum Royalty Compensation
+        of Twenty Thousand U.S. Dollars ($20,000) payable in four (4) equal installments of Five Thousand
+        U.S. Dollars ($5,000) and due simultaneously with the Retainer Fee on or before the first (1st)
+        day of February, May, August and November in each Contract Year.
+    - start: 15286
+      end: 15368
+      text: Tour Events and the British Open in each Contract Year during the Contract Period.
+    - start: 15011
+      end: 15236
+      text: TPC shall have the right to prorate the  Retainer Fee due Consolidated Artists upon fourteen
+        (14) days written notice  to Consolidated Artists or Advantage in the event Ogle fails to play
+        a  minimum of seventeen (17) U.S. PGA
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Minimum Commitment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: teardropgolfco-endorsement-agreement__ip_ownership_assignment
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: ip_ownership_assignment
+  question: Does either party assign IP ownership to the other?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Ip Ownership Assignment
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__audit_rights
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: audit_rights
+  question: Does either party have the right to audit the other?
+  expected:
+    present: true
+    spans:
+    - start: 14116
+      end: 14467
+      text: Consolidated Artists and Advantage, at Consolidated Artists' expense, shall have the right
+        during the Contract Period and until two (2) years after the termination of this Agreement to
+        inspect and make copies of the books and records of TPC insofar as they relate to the computation
+        of royalty payments due and owing to Consolidated Artists hereunder.
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Audit Rights
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__uncapped_liability
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: uncapped_liability
+  question: Are there carve-outs where liability is uncapped?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Uncapped Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__cap_on_liability
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: cap_on_liability
+  question: Is there a cap on either party's liability?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Cap On Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__liquidated_damages
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: liquidated_damages
+  question: Are there liquidated damages provisions?
+  expected:
+    present: true
+    spans:
+    - start: 17062
+      end: 17350
+      text: In addition, TPC agrees that Consolidated Artists shall be entitled to the Retainer Fee prorated
+        to the effective date of termination as well any Tournament Bonuses, Money List Bonuses and any
+        Royalty Compensation earned by Consolidated Artists prior to the effective date of termination.
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Liquidated Damages
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: teardropgolfco-endorsement-agreement__insurance
+  contract: teardropgolfco-endorsement-agreement
+  clause_type: insurance
+  question: Is either party required to maintain insurance?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT__Insurance
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium

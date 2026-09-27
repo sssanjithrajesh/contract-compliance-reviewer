@@ -1,0 +1,297 @@
+contract: drivendeliveries-consulting-agreement
+title: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT
+cases:
+- id: drivendeliveries-consulting-agreement__renewal_term
+  contract: drivendeliveries-consulting-agreement
+  clause_type: renewal_term
+  question: Does the contract renew, and how?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Renewal Term
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__governing_law
+  contract: drivendeliveries-consulting-agreement
+  clause_type: governing_law
+  question: Which jurisdiction's law governs this contract?
+  expected:
+    present: true
+    spans:
+    - start: 23945
+      end: 24088
+      text: This Agreement shall be governed by the laws of the State of California, without regard to
+        the conflicts of law provisions of any jurisdiction.
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Governing Law
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__most_favored_nation
+  contract: drivendeliveries-consulting-agreement
+  clause_type: most_favored_nation
+  question: Is there a most-favored-nation pricing clause?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Most Favored Nation
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__non_compete
+  contract: drivendeliveries-consulting-agreement
+  clause_type: non_compete
+  question: Is either party restricted from competing?
+  expected:
+    present: true
+    spans:
+    - start: 14454
+      end: 14914
+      text: Consultant does not presently perform or intend to perform, during the term of this Agreement,
+        consulting or other services for, or engage in or intend to engage in an employment relationship
+        with, companies who businesses or proposed businesses in any way involve products or services
+        which would be competitive with the Company's products or services, or those products or services
+        proposed or in development by the Company during the term of this Agreement.
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Non-Compete
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__exclusivity
+  contract: drivendeliveries-consulting-agreement
+  clause_type: exclusivity
+  question: Does this contract grant exclusivity to either party?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Exclusivity
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__termination_for_convenience
+  contract: drivendeliveries-consulting-agreement
+  clause_type: termination_for_convenience
+  question: Can either party terminate without cause, and on what notice?
+  expected:
+    present: true
+    spans:
+    - start: 17741
+      end: 17936
+      text: Either Party may terminate this Agreement, with or without cause, upon giving the other party
+        thirty (30) days prior written notice of such termination pursuant to Section 12.7 of this Agreement.
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Termination For Convenience
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__change_of_control
+  contract: drivendeliveries-consulting-agreement
+  clause_type: change_of_control
+  question: Does a change of control trigger any rights or obligations?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Change Of Control
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__anti_assignment
+  contract: drivendeliveries-consulting-agreement
+  clause_type: anti_assignment
+  question: Is assignment of the contract restricted?
+  expected:
+    present: true
+    spans:
+    - start: 24530
+      end: 24676
+      text: Except as may otherwise be provided in this Agreement, Consultant may not sell, assign or
+        delegate any rights or obligations under this Agreement.
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Anti-Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__minimum_commitment
+  contract: drivendeliveries-consulting-agreement
+  clause_type: minimum_commitment
+  question: Is there a minimum purchase or volume commitment?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Minimum Commitment
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__ip_ownership_assignment
+  contract: drivendeliveries-consulting-agreement
+  clause_type: ip_ownership_assignment
+  question: Does either party assign IP ownership to the other?
+  expected:
+    present: true
+    spans:
+    - start: 11086
+      end: 11817
+      text: Consultant agrees to assist Company, or its designee, at the Company's expense, in every proper
+        way to secure the Company's rights in Inventions in any and all countries, including the disclosure
+        to the Company of all pertinent information and data with respect thereto, the execution of all
+        applications, specifications, oaths, assignments and all other instruments that the Company may
+        deem necessary in order to apply for, register, obtain, maintain, defend, and enforce such rights,
+        and in order to deliver, assign and convey to the Company, its successors, assigns and nominees
+        the sole and exclusive right, title, and interest in and to all Inventions and testifying in a
+        suit or other proceeding relating to such Inventions.
+    - start: 11976
+      end: 12907
+      text: Consultant agrees that, if the Company is unable because of Consultant's unavailability, dissolution,
+        mental or physical incapacity, or for any other reason, to secure Consultant's signature with
+        respect to any Inventions, including, without limitation, for the purpose of applying for or pursuing
+        any application for any United States or foreign patents or mask work or copyright registrations
+        covering the Inventions assigned to the Company in Section 3.1, then Consultant hereby irrevocably
+        designates and appoints the Company and its duly authorized officers and agents as Consultant's
+        agent and attorney-in-fact, to act for and on Consultant's behalf to execute and file any papers
+        and oaths and to do all other lawfully permitted acts with respect to such Inventions to further
+        the prosecution and issuance of patents, copyright and mask work registrations with the same legal
+        force and effect as if executed by Consultant. T
+    - start: 10461
+      end: 11060
+      text: Consultant agrees to keep and maintain adequate, current, accurate, and authentic written
+        records of all Inventions made by Consultant (solely or jointly with others) during the term of
+        this Agreement, and for a period of three (3) years thereafter. The records will be in the form
+        of notes, sketches, drawings, electronic files, reports, or any other format that is customary
+        in the industry and/or otherwise specified by the Company. Such records are and remain the sole
+        property of the Company at all times and upon Company's request, Consultant shall deliver (or
+        cause to be delivered) the same.
+    - start: 7391
+      end: 8416
+      text: Consultant agrees that all right, title, and interest in and to any material, notes, records,
+        drawings, designs, inventions, improvements, developments, discoveries and trade secrets conceived,
+        discovered, authored, invented, developed or reduced to practice by Consultant, solely or in collaboration
+        with others, whether or not patentable or copyrightable, during the term of this Agreement and
+        arising out of, or in connection with, performing the Services under this Agreement and any copyrights,
+        patents, trade secrets, mask work rights or other intellectual property rights relating to the
+        foregoing (collectively, "Inventions"), are the sole property of the Company. Consultant also
+        agrees to promptly make full written disclosure to the Company of any Inventions and to deliver
+        and assign (or cause to be assigned) and irrevocably assigns fully to the Company all right, title
+        and interest in and to the Inventions. Without limiting the foregoing, all Inventions shall be
+        deemed Confidential Information of the Company
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Ip Ownership Assignment
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: hard
+- id: drivendeliveries-consulting-agreement__audit_rights
+  contract: drivendeliveries-consulting-agreement
+  clause_type: audit_rights
+  question: Does either party have the right to audit the other?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Audit Rights
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__uncapped_liability
+  contract: drivendeliveries-consulting-agreement
+  clause_type: uncapped_liability
+  question: Are there carve-outs where liability is uncapped?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Uncapped Liability
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__cap_on_liability
+  contract: drivendeliveries-consulting-agreement
+  clause_type: cap_on_liability
+  question: Is there a cap on either party's liability?
+  expected:
+    present: true
+    spans:
+    - start: 21421
+      end: 21893
+      text: IN NO EVENT SHALL COMPANY BE LIABLE TO CONSULTANT OR TO ANY OTHER PARTY FOR ANY INDIRECT,
+        INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES, OR DAMAGES FOR LOST PROFITS OR LOSS OF BUSINESS,
+        HOWEVER CAUSED AND UNDER ANY THEORY OF LIABILITY, WHETHER BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE)
+        OR OTHER THEORY OF LIABILITY, REGARDLESS OF WHETHER COMPANY WAS ADVISED OF THE POSSIBILITY OF
+        SUCH DAMAGES AND NOTWITHSTANDING THE FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
+    - start: 21894
+      end: 22138
+      text: IN NO EVENT SHALL COMPANY'S AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THIS
+        AGREEMENT EXCEED THE AMOUNTS PAID BY COMPANY TO CONSULTANT UNDER THIS AGREEMENT FOR THE SERVICES,
+        DELIVERABLES OR INVENTION GIVING RISE TO SUCH LIABILITY.
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Cap On Liability
+    license: CC-BY-4.0
+  tags:
+  - present
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__liquidated_damages
+  contract: drivendeliveries-consulting-agreement
+  clause_type: liquidated_damages
+  question: Are there liquidated damages provisions?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Liquidated Damages
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium
+- id: drivendeliveries-consulting-agreement__insurance
+  contract: drivendeliveries-consulting-agreement
+  clause_type: insurance
+  question: Is either party required to maintain insurance?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: cuad
+    id: DRIVENDELIVERIES,INC_05_22_2020-EX-10.4-CONSULTING AGREEMENT__Insurance
+    license: CC-BY-4.0
+  tags:
+  - absent
+  - refusal
+  difficulty: medium

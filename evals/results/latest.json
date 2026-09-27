@@ -1,0 +1,134 @@
+{
+  "generated_at": "2026-09-27T06:54:04+00:00",
+  "reviewer": "keyword",
+  "overall": {
+    "n": 120,
+    "presence_accuracy": 0.625,
+    "span_recall": 0.3478,
+    "citation_precision": 0.1722,
+    "false_refusal_rate": 0.0926,
+    "hallucinated_presence_rate": 0.6061
+  },
+  "by_clause_type": {
+    "anti_assignment": {
+      "n": 8,
+      "presence_accuracy": 0.875,
+      "span_recall": 0.2143,
+      "citation_precision": 0.1667,
+      "false_refusal_rate": 0.125,
+      "hallucinated_presence_rate": 0.0
+    },
+    "audit_rights": {
+      "n": 8,
+      "presence_accuracy": 0.625,
+      "span_recall": 0.375,
+      "citation_precision": 0.2727,
+      "false_refusal_rate": 0.25,
+      "hallucinated_presence_rate": 0.5
+    },
+    "cap_on_liability": {
+      "n": 8,
+      "presence_accuracy": 0.625,
+      "span_recall": 0.1538,
+      "citation_precision": 0.125,
+      "false_refusal_rate": 0.2,
+      "hallucinated_presence_rate": 0.6667
+    },
+    "change_of_control": {
+      "n": 8,
+      "presence_accuracy": 0.75,
+      "span_recall": 0.3333,
+      "citation_precision": 0.4,
+      "false_refusal_rate": 0.5,
+      "hallucinated_presence_rate": 0.0
+    },
+    "exclusivity": {
+      "n": 8,
+      "presence_accuracy": 0.375,
+      "span_recall": 0.4286,
+      "citation_precision": 0.1364,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 1.0
+    },
+    "governing_law": {
+      "n": 8,
+      "presence_accuracy": 1.0,
+      "span_recall": 0.875,
+      "citation_precision": 0.4375,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "insurance": {
+      "n": 8,
+      "presence_accuracy": 0.75,
+      "span_recall": 0.6667,
+      "citation_precision": 0.3,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.3333
+    },
+    "ip_ownership_assignment": {
+      "n": 8,
+      "presence_accuracy": 0.625,
+      "span_recall": 0.1667,
+      "citation_precision": 0.125,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 1.0
+    },
+    "liquidated_damages": {
+      "n": 8,
+      "presence_accuracy": 0.25,
+      "span_recall": 0.5,
+      "citation_precision": 0.0769,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 1.0
+    },
+    "minimum_commitment": {
+      "n": 8,
+      "presence_accuracy": 0.5,
+      "span_recall": 0.1111,
+      "citation_precision": 0.125,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.8
+    },
+    "most_favored_nation": {
+      "n": 8,
+      "presence_accuracy": 1.0,
+      "span_recall": 0.0,
+      "citation_precision": 0.0,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "non_compete": {
+      "n": 8,
+      "presence_accuracy": 0.5,
+      "span_recall": 1.0,
+      "citation_precision": 0.2222,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.6667
+    },
+    "renewal_term": {
+      "n": 8,
+      "presence_accuracy": 0.625,
+      "span_recall": 1.0,
+      "citation_precision": 0.2,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.4286
+    },
+    "termination_for_convenience": {
+      "n": 8,
+      "presence_accuracy": 0.75,
+      "span_recall": 0.3333,
+      "citation_precision": 0.125,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 1.0
+    },
+    "uncapped_liability": {
+      "n": 8,
+      "presence_accuracy": 0.125,
+      "span_recall": 1.0,
+      "citation_precision": 0.05,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 1.0
+    }
+  }
+}

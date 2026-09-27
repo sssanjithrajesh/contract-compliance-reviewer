@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Review queue</h1>
+<p class="muted">Upload a contract. The system proposes 15 findings, each cited to the page or marked "not found". Engine: <code>{{ reviewer }}</code>.</p>
+
+<div class="card">
+  <form class="inline" action="/contracts" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".pdf,.docx,.txt" required>
+    <button class="primary" type="submit">Upload and review</button>
+  </form>
+</div>
+
+<div class="card">
+<table>
+  <thead><tr><th>Contract</th><th>Uploaded</th><th>Engine</th><th>Progress</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for row in rows %}
+    {% set s = row.summary %}
+    <tr>
+      <td><a href="/contracts/{{ row.contract.id }}">{{ row.contract.filename }}</a></td>
+      <td class="muted">{{ row.contract.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+      <td class="muted">{{ row.review.reviewer_name if row.review else "-" }}</td>
+      <td style="min-width:180px">
+        {% if s %}
+        <div class="bar">
+          <span style="width:{{ 100 * s.approved / s.total }}%;background:var(--ok)"></span>
+          <span style="width:{{ 100 * s.rejected / s.total }}%;background:var(--bad)"></span>
+        </div>
+        <span class="muted">{{ s.approved }} approved &middot; {{ s.rejected }} rejected &middot; {{ s.proposed }} awaiting</span>
+        {% endif %}
+      </td>
+      <td>{% if s and s.final %}<span class="final">Final</span>{% elif s %}<span class="pill proposed">In review</span>{% else %}-{% endif %}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5" class="muted">No contracts yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

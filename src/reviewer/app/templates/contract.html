@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{{ contract.filename }} - Contract Compliance Reviewer{% endblock %}
+{% block body %}
+<p><a href="/">&larr; Queue</a></p>
+<h1>{{ contract.filename }}</h1>
+<p class="muted">{{ contract.text | length }} characters &middot; engine <code>{{ review.reviewer_name if review else "-" }}</code>
+  &middot; <a href="/api/contracts/{{ contract.id }}/review.json">export JSON</a></p>
+
+{% if summary %}
+<div class="card grid">
+  <div class="stat">{{ summary.total }}<small>clause checks</small></div>
+  <div class="stat">{{ findings | selectattr("present") | list | length }}<small>proposed present</small></div>
+  <div class="stat">{{ summary.approved }}<small>approved</small></div>
+  <div class="stat">{{ summary.rejected }}<small>rejected</small></div>
+  <div class="stat">{{ summary.proposed }}<small>awaiting decision</small></div>
+</div>
+{% if summary.final %}<p class="final">All findings decided. This review is final.</p>{% endif %}
+{% endif %}
+
+{% for f in findings %}
+{% set ct = clauses[f.clause_type] %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+    <div>
+      <strong>{{ ct.cuad_name }}</strong>
+      <span class="pill {{ 'present' if f.present else 'absent' }}">{{ "found" if f.present else "not found" }}</span>
+      <span class="pill {{ f.status }}">{{ f.status }}</span>
+      <div class="muted">{{ ct.question }}</div>
+      <div class="muted" style="font-size:13px">Why it matters: {{ ct.why_it_matters }}</div>
+    </div>
+    <div class="muted" style="font-size:13px; text-align:right">
+      confidence {{ "%.0f" | format(f.confidence * 100) }}%<br>
+      {% if f.decided_by %}{{ f.status }} by {{ f.decided_by }}<br>{{ f.decided_at.strftime("%Y-%m-%d %H:%M") }}{% endif %}
+    </div>
+  </div>
+
+  {% for c in f.citations %}
+  <div class="cite"><span class="pg">page {{ c.page }} &middot; chars {{ c.start }}-{{ c.end }}</span>{{ c.text }}</div>
+  {% endfor %}
+  {% if f.present and not f.citations %}
+  <p class="muted">Marked present without citation. This should not happen; reject it.</p>
+  {% endif %}
+  {% if f.rationale %}<p class="muted" style="font-size:13px">System note: {{ f.rationale }}</p>{% endif %}
+  {% if f.note %}<p style="font-size:13px"><strong>Reviewer note:</strong> {{ f.note }}</p>{% endif %}
+
+  {% if f.status == "proposed" %}
+  <form class="inline" method="post" action="/findings/{{ f.id }}/decide">
+    <input type="text" name="who" placeholder="Your name (required)" required>
+    <input type="text" name="note" placeholder="Note (optional)" style="min-width:260px">
+    <button class="approve" name="status" value="approved">Approve</button>
+    <button class="reject" name="status" value="rejected">Reject</button>
+  </form>
+  {% else %}
+  <form class="inline" method="post" action="/findings/{{ f.id }}/decide">
+    <input type="hidden" name="status" value="proposed">
+    <button type="submit">Reopen</button>
+  </form>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

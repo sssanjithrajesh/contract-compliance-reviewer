@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}Contract Compliance Reviewer{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --ink:#1a1a1a; --muted:#666; --line:#e6e6e6; --bg:#fafafa; --ok:#27ae60; --warn:#f2994a; --bad:#eb5757; --blue:#2f80ed; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; color:var(--ink); background:var(--bg); }
+  header { background:#fff; border-bottom:1px solid var(--line); padding:14px 28px; display:flex; align-items:center; gap:18px; }
+  header a { color:var(--ink); text-decoration:none; font-weight:600; }
+  header .sub { color:var(--muted); font-size:13px; }
+  main { max-width: 1100px; margin: 28px auto; padding: 0 28px; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  h2 { font-size: 16px; margin: 28px 0 10px; }
+  .muted { color: var(--muted); }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:16px; }
+  table { width:100%; border-collapse: collapse; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align: top; }
+  th { font-size:12px; text-transform: uppercase; letter-spacing:.04em; color:var(--muted); }
+  .pill { display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:600; }
+  .pill.proposed { background:#fff4e5; color:#9a5a00; }
+  .pill.approved { background:#e8f7ee; color:#1b7a3e; }
+  .pill.rejected { background:#fdecec; color:#a32626; }
+  .pill.present { background:#e8f0fd; color:#1c4f9c; }
+  .pill.absent { background:#f0f0f0; color:#555; }
+  .cite { font-family: ui-monospace, Consolas, monospace; font-size:12.5px; background:#f6f7f9; border-left:3px solid var(--blue); padding:8px 10px; margin:6px 0; white-space: pre-wrap; }
+  .cite .pg { color:var(--muted); font-family: inherit; font-size:11px; display:block; margin-bottom:4px; }
+  form.inline { display:flex; gap:6px; flex-wrap: wrap; align-items:center; }
+  input[type=text] { padding:6px 8px; border:1px solid #ccc; border-radius:6px; font: inherit; }
+  button { padding:6px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; font: inherit; cursor:pointer; }
+  button.approve { border-color:var(--ok); color:var(--ok); }
+  button.reject { border-color:var(--bad); color:var(--bad); }
+  button.primary { background:var(--blue); color:#fff; border-color:var(--blue); }
+  .bar { display:flex; height:10px; border-radius:6px; overflow:hidden; background:#eee; margin:8px 0; }
+  .bar span { display:block; height:100%; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:12px; }
+  .stat { font-size: 26px; font-weight: 600; }
+  .stat small { display:block; font-size:12px; color:var(--muted); font-weight:400; }
+  .final { color: var(--ok); font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <a href="/">Contract Compliance Reviewer</a>
+  <span class="sub">Harlow &amp; Pryce LLP (pilot) &middot; nothing is final until a named lawyer approves it</span>
+</header>
+<main>{% block body %}{% endblock %}</main>
+</body>
+</html>

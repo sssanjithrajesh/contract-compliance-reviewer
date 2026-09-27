@@ -105,15 +105,9 @@ def aggregate(results: list[CaseResult]) -> Metrics:
         n=n,
         presence_accuracy=sum(r.presence_correct for r in results) / n,
         span_recall=(sum(r.hit_spans for r in results) / exp_spans) if exp_spans else 0.0,
-        citation_precision=(
-            sum(r.grounded_predictions for r in results) / pred_spans if pred_spans else 0.0
-        ),
-        false_refusal_rate=(
-            sum(r.false_refusal for r in present) / len(present) if present else 0.0
-        ),
-        hallucinated_presence_rate=(
-            sum(r.hallucinated_presence for r in absent) / len(absent) if absent else 0.0
-        ),
+        citation_precision=(sum(r.grounded_predictions for r in results) / pred_spans if pred_spans else 0.0),
+        false_refusal_rate=(sum(r.false_refusal for r in present) / len(present) if present else 0.0),
+        hallucinated_presence_rate=(sum(r.hallucinated_presence for r in absent) / len(absent) if absent else 0.0),
     )
 
 

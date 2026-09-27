@@ -89,10 +89,7 @@ class Index:
             ranked = self._dense_ranked(query)
         else:
             ranked = self._rrf(self._bm25_ranked(query), self._dense_ranked(query))
-        return [
-            Hit(chunk=self.chunks[i], score=float(s), rank=r)
-            for r, (i, s) in enumerate(ranked[:k], start=1)
-        ]
+        return [Hit(chunk=self.chunks[i], score=float(s), rank=r) for r, (i, s) in enumerate(ranked[:k], start=1)]
 
     @staticmethod
     def _rrf(*rankings: list[tuple[int, float]], k: int = 60) -> list[tuple[int, float]]:

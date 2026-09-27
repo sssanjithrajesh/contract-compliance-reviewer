@@ -70,7 +70,7 @@ At ~900 contracts a year that is roughly 3,300 junior hours and 700 senior hours
   A fully offline mode is a requirement for two specific clients.
 - Nothing is final without a named lawyer approving it. The system proposes; a person
   disposes.
-- Integration target is the practice-management system (Salesforce-based) and the firm's
+- Integration target is the practice-management system (built on HubSpot) and the firm's
   Slack. Not the document management system, at least in phase one.
 - Budget and time: they want something usable on real matters in about eight weeks, with
   a measured error rate before rollout.

@@ -14,9 +14,9 @@
 3. **Measured accuracy.** An eval set built from CUAD, scored before the system is built
    and re-scored on every change. The firm gets a number for miss rate and hallucination
    rate before pilot.
-4. **Integrations via MCP:** the firm's Salesforce-based practice-management system
+4. **Integrations via MCP:** the firm's HubSpot-based practice-management system
    (read matter and client, write findings back) and Slack (notify the assigned reviewer).
-   Each integration degrades gracefully: if Salesforce is down, review still works and
+   Each integration degrades gracefully: if HubSpot is down, review still works and
    write-back queues.
 5. **Deployment options:** Docker Compose for the pilot; Helm chart for the firm's cloud
    tenancy; an offline mode that swaps the hosted model for a local one with a single flag.
@@ -41,7 +41,7 @@
 |---|---|---|---|
 | 1 Spec | 1-2 | Eval set (100+ cases), harness, CI gate, baseline number, this document | Baseline scorecard published; firm agrees the 15 questions are the right ones |
 | 2 Core | 3-4 | Retrieval + extraction with citations, refusal path, review queue, web UI | Span recall >= 80%, hallucinated presence <= 10% on the eval set |
-| 3 Integrate | 5-6 | MCP servers for Salesforce + Slack, Docker Compose, offline mode | Findings visible on a matter record; each integration's failure mode documented |
+| 3 Integrate | 5-6 | MCP servers for HubSpot + Slack, Docker Compose, offline mode | Findings visible on a matter record; each integration's failure mode documented |
 | 4 Harden | 7-8 | Public deploy, runbook, post-mortem, demo, second-customer config | Pilot on 20 real matters with senior verification; miss rate reported |
 
 ## Definition of done
@@ -52,8 +52,8 @@ The engagement is done when all of the following are true:
 - [ ] Every finding passes through the review queue and carries the approving lawyer's name.
 - [ ] The eval scorecard shows span recall >= 80% and hallucinated presence <= 10%,
       with the CI gate enforcing no regression.
-- [ ] Approved findings appear on the Salesforce matter record within one minute, and
-      queue rather than fail when Salesforce is unavailable.
+- [ ] Approved findings appear on the HubSpot matter record within one minute, and
+      queue rather than fail when HubSpot is unavailable.
 - [ ] The offline flag produces a working review with no outbound network calls
       (verified by packet capture during the demo).
 - [ ] The runbook lets the firm's IT lead redeploy and roll back without the engineer.
@@ -75,7 +75,7 @@ and it is reported on every change.
 
 - **Assumption:** CUAD's clause categories match the firm's checklist closely enough that
   the public benchmark is a fair proxy. Confirmed for 15 of 15 in discovery.
-- **Assumption:** the firm can provision a Salesforce sandbox and Slack workspace for the
+- **Assumption:** the firm can provision a HubSpot developer account and Slack workspace for the
   pilot within week 3.
 - **Risk:** scanned contracts. OCR quality drives everything downstream. Mitigation: the
   eval set will include generated scans (rotated, low-DPI) in phase 2, scored separately.

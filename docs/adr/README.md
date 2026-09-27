@@ -8,6 +8,7 @@ considered, not just the winner, what the choice cost, and what would make us re
 | [0000](0000-template.md) | Template | - |
 | [0001](0001-eval-set-before-system.md) | Build the eval set before the system, from CUAD, with absent cases | Accepted |
 | [0002](0002-retrieval-architecture.md) | Hybrid BM25 + local dense retrieval; presence if either signal clears its bar | Accepted |
+| [0003](0003-outbox-and-mcp-boundaries.md) | Integrations via a transactional outbox; MCP servers split by trust boundary | Accepted |
 
-Upcoming: LLM extraction prompt and grounding policy, integration transport (MCP vs
-direct SDK), offline model choice, storage (SQLite pilot vs Postgres/pgvector).
+Upcoming: LLM extraction scoring once a key is available, OIDC identity for MCP roles,
+Salesforce as a second CRM adapter, OCR for scanned intake.

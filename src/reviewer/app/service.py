@@ -28,8 +28,14 @@ def store_contract(session: Session, data: bytes, filename: str) -> db.Contract:
     return contract
 
 
-def run_review(session: Session, contract: db.Contract, reviewer_name: str) -> db.Review:
+def run_review(
+    session: Session,
+    contract: db.Contract,
+    reviewer_name: str,
+    clause_slugs: list[str] | None = None,
+) -> db.Review:
     reviewer = get_reviewer(reviewer_name)
+    slugs = clause_slugs or list(CLAUSE_TYPES)
     doc = Document(
         text=contract.text,
         filename=contract.filename,
@@ -39,7 +45,8 @@ def run_review(session: Session, contract: db.Contract, reviewer_name: str) -> d
     review = db.Review(contract_id=contract.id, reviewer_name=reviewer.name)
     session.add(review)
     session.flush()
-    for slug, ct in CLAUSE_TYPES.items():
+    for slug in slugs:
+        ct = CLAUSE_TYPES[slug]
         finding = reviewer.review(contract.text, slug, ct.question)
         row = db.Finding(
             review_id=review.id,
@@ -105,10 +112,7 @@ def export_review(review: db.Review) -> dict:
                 "decided_by": f.decided_by,
                 "decided_at": f.decided_at.isoformat() if f.decided_at else None,
                 "note": f.note,
-                "citations": [
-                    {"page": c.page, "start": c.start, "end": c.end, "text": c.text}
-                    for c in f.citations
-                ],
+                "citations": [{"page": c.page, "start": c.start, "end": c.end, "text": c.text} for c in f.citations],
             }
             for f in review.findings
         ],

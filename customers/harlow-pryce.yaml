@@ -1,0 +1,61 @@
+# Customer configuration: Harlow & Pryce LLP (fictional mid-size law firm)
+#
+# Everything that differs between customers lives in a file like this one. The code
+# does not know which customer it is serving. A second customer is a second file.
+
+customer:
+  id: harlow-pryce
+  name: Harlow & Pryce LLP
+  domain: legal
+  tagline: nothing is final until a named lawyer approves it
+
+# Which clause checks to run. Slugs refer to src/reviewer/clauses.py. Order is display order.
+clauses:
+  - governing_law
+  - termination_for_convenience
+  - cap_on_liability
+  - uncapped_liability
+  - non_compete
+  - exclusivity
+  - anti_assignment
+  - change_of_control
+  - ip_ownership_assignment
+  - audit_rights
+  - insurance
+  - renewal_term
+  - minimum_commitment
+  - liquidated_damages
+  - most_favored_nation
+
+review:
+  engine: retrieval-hybrid          # or "llm" when an API key is present
+  offline: false                    # true forces the local engine and blocks every outbound call
+  require_named_approver: true
+
+integrations:
+  crm:
+    provider: hubspot               # hubspot | none
+    # Findings are written back as a Note on the matter (a HubSpot Deal). The deal is looked
+    # up by the contract filename stem; if none exists it is created under the firm's company.
+    matter_object: deals
+    write_back_on: approved         # approved | any_decision
+  notify:
+    provider: slack                 # slack | none
+    channel_hint: "#contract-review"
+    notify_on: [review_created, review_final]
+
+# Who may call which MCP tools. Roles are asserted by the MCP client (via the CCR_MCP_ROLE
+# environment variable in the pilot; OIDC claims in the firm's deployment).
+access:
+  roles:
+    associate:   [list_contracts, get_review, review_contract, search_contract]
+    partner:     [list_contracts, get_review, review_contract, search_contract, decide_finding,
+                  crm_lookup_matter, crm_write_findings, notify_channel]
+    integration: [crm_lookup_matter, crm_write_findings, crm_reconcile, notify_channel]
+
+roi:
+  contracts_per_year: 900
+  junior_hours_before: 3.6
+  junior_hours_after: 1.2
+  senior_hours_before: 0.8
+  senior_hours_after: 0.5

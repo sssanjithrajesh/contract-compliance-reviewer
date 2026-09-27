@@ -52,16 +52,12 @@ class Finding(Base):
     present: Mapped[int] = mapped_column(Integer)  # bool as int for SQLite portability
     rationale: Mapped[str] = mapped_column(Text, default="")
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
-    status: Mapped[str] = mapped_column(
-        String(20), default="proposed"
-    )  # proposed|approved|rejected
+    status: Mapped[str] = mapped_column(String(20), default="proposed")  # proposed|approved|rejected
     decided_by: Mapped[str | None] = mapped_column(String(100), nullable=True)
     decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     note: Mapped[str] = mapped_column(Text, default="")
     review: Mapped[Review] = relationship(back_populates="findings")
-    citations: Mapped[list[Citation]] = relationship(
-        back_populates="finding", cascade="all, delete"
-    )
+    citations: Mapped[list[Citation]] = relationship(back_populates="finding", cascade="all, delete")
 
 
 class Citation(Base):

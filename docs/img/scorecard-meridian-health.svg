@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="334" viewBox="0 0 760 334" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12">
+<rect width="760" height="334" fill="#ffffff" rx="8"/>
+<text x="190" y="24" font-size="15" font-weight="600" fill="#1a1a1a">Eval scorecard | reviewer: retrieval-hybrid | 16 cases</text>
+<rect x="190" y="36" width="10" height="10" fill="#2f80ed" rx="2"/>
+<text x="204" y="45" fill="#444">presence accuracy</text>
+<rect x="340" y="36" width="10" height="10" fill="#27ae60" rx="2"/>
+<text x="354" y="45" fill="#444">span recall</text>
+<rect x="490" y="36" width="10" height="10" fill="#f2994a" rx="2"/>
+<text x="504" y="45" fill="#444">citation precision</text>
+<line x1="190.0" y1="56" x2="190.0" y2="298" stroke="#e6e6e6"/>
+<text x="190.0" y="312" text-anchor="middle" fill="#888">0%</text>
+<line x1="325.0" y1="56" x2="325.0" y2="298" stroke="#e6e6e6"/>
+<text x="325.0" y="312" text-anchor="middle" fill="#888">25%</text>
+<line x1="460.0" y1="56" x2="460.0" y2="298" stroke="#e6e6e6"/>
+<text x="460.0" y="312" text-anchor="middle" fill="#888">50%</text>
+<line x1="595.0" y1="56" x2="595.0" y2="298" stroke="#e6e6e6"/>
+<text x="595.0" y="312" text-anchor="middle" fill="#888">75%</text>
+<line x1="730.0" y1="56" x2="730.0" y2="298" stroke="#e6e6e6"/>
+<text x="730.0" y="312" text-anchor="middle" fill="#888">100%</text>
+<text x="182" y="74" text-anchor="end" fill="#1a1a1a">baa_breach_notification</text>
+<rect x="190" y="62" width="270.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="69" width="270.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="76" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="100" text-anchor="end" fill="#1a1a1a">baa_hhs_access</text>
+<rect x="190" y="88" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="95" width="540.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="102" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="126" text-anchor="end" fill="#1a1a1a">baa_individual_rights</text>
+<rect x="190" y="114" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="121" width="360.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="128" width="540.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="152" text-anchor="end" fill="#1a1a1a">baa_permitted_uses</text>
+<rect x="190" y="140" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="147" width="360.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="154" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="178" text-anchor="end" fill="#1a1a1a">baa_return_destroy</text>
+<rect x="190" y="166" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="173" width="270.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="180" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="204" text-anchor="end" fill="#1a1a1a">baa_safeguards</text>
+<rect x="190" y="192" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="199" width="540.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="206" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="230" text-anchor="end" fill="#1a1a1a">baa_subcontractors</text>
+<rect x="190" y="218" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="225" width="540.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="232" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="256" text-anchor="end" fill="#1a1a1a">baa_termination_for_breach</text>
+<rect x="190" y="244" width="540.0" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="251" width="540.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="258" width="270.0" height="6" fill="#f2994a" rx="1"/>
+<text x="182" y="282" text-anchor="end" fill="#1a1a1a" font-weight="600">OVERALL</text>
+<rect x="190" y="270" width="506.2" height="6" fill="#2f80ed" rx="1"/>
+<rect x="190" y="277" width="396.0" height="6" fill="#27ae60" rx="1"/>
+<rect x="190" y="284" width="297.0" height="6" fill="#f2994a" rx="1"/>
+</svg>

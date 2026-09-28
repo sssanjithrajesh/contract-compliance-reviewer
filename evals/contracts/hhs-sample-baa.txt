@@ -1,0 +1,73 @@
+BUSINESS ASSOCIATE AGREEMENT
+
+This Business Associate Agreement ("Agreement") is entered into between Meridian Health Partners ("Covered Entity") and Northwind Revenue Cycle Services, LLC ("Business Associate"), effective as of the date last signed below. The parties are entering into this Agreement in connection with the Master Services Agreement under which Business Associate performs billing and claims processing services that involve the creation, receipt, maintenance, or transmission of Protected Health Information.
+
+1. Definitions
+
+Terms used but not otherwise defined in this Agreement have the same meaning as those terms in the HIPAA Rules. "Business Associate" has the meaning given at 45 CFR 160.103. "Covered Entity" has the meaning given at 45 CFR 160.103. "HIPAA Rules" means the Privacy, Security, Breach Notification, and Enforcement Rules at 45 CFR Part 160 and Part 164. "Protected Health Information" or "PHI" has the meaning given at 45 CFR 160.103, limited to the information created, received, maintained, or transmitted by Business Associate on behalf of Covered Entity.
+
+2. Obligations and Activities of Business Associate
+
+2.1 Business Associate agrees to not use or disclose Protected Health Information other than as permitted or required by this Agreement or as required by law.
+
+2.2 Business Associate agrees to use appropriate administrative, physical, and technical safeguards, and comply with Subpart C of 45 CFR Part 164 with respect to electronic Protected Health Information, to prevent use or disclosure of Protected Health Information other than as provided for by this Agreement.
+
+2.3 Business Associate agrees to report to Covered Entity any use or disclosure of Protected Health Information not provided for by this Agreement of which it becomes aware, including breaches of unsecured Protected Health Information as required at 45 CFR 164.410, and any security incident of which it becomes aware. Such report shall be made without unreasonable delay and in no case later than ten (10) business days after discovery.
+
+2.4 In accordance with 45 CFR 164.502(e)(1)(ii) and 164.308(b)(2), Business Associate agrees to ensure that any subcontractors that create, receive, maintain, or transmit Protected Health Information on behalf of Business Associate agree in writing to the same restrictions, conditions, and requirements that apply to Business Associate with respect to such information.
+
+2.5 Business Associate agrees to make available Protected Health Information in a designated record set to Covered Entity as necessary to satisfy Covered Entity's obligations under 45 CFR 164.524, within fifteen (15) business days of a request.
+
+2.6 Business Associate agrees to make any amendment(s) to Protected Health Information in a designated record set as directed or agreed to by Covered Entity pursuant to 45 CFR 164.526, or take other measures as necessary to satisfy Covered Entity's obligations under 45 CFR 164.526.
+
+2.7 Business Associate agrees to maintain and make available the information required to provide an accounting of disclosures to Covered Entity as necessary to satisfy Covered Entity's obligations under 45 CFR 164.528.
+
+2.8 To the extent Business Associate is to carry out one or more of Covered Entity's obligation(s) under Subpart E of 45 CFR Part 164, Business Associate agrees to comply with the requirements of Subpart E that apply to Covered Entity in the performance of such obligation(s).
+
+2.9 Business Associate agrees to make its internal practices, books, and records available to the Secretary of the Department of Health and Human Services for purposes of determining compliance with the HIPAA Rules.
+
+3. Permitted Uses and Disclosures by Business Associate
+
+3.1 Business Associate may only use or disclose Protected Health Information as necessary to perform the billing and claims processing services set forth in the Master Services Agreement.
+
+3.2 Business Associate may use or disclose Protected Health Information as required by law.
+
+3.3 Business Associate agrees to make uses and disclosures and requests for Protected Health Information consistent with Covered Entity's minimum necessary policies and procedures.
+
+3.4 Business Associate may not use or disclose Protected Health Information in a manner that would violate Subpart E of 45 CFR Part 164 if done by Covered Entity, except for the specific uses and disclosures set forth below.
+
+3.5 Business Associate may use Protected Health Information for the proper management and administration of Business Associate or to carry out the legal responsibilities of Business Associate.
+
+3.6 Business Associate may disclose Protected Health Information for the proper management and administration of Business Associate or to carry out the legal responsibilities of Business Associate, provided the disclosures are required by law, or Business Associate obtains reasonable assurances from the person to whom the information is disclosed that the information will remain confidential and used or further disclosed only as required by law or for the purposes for which it was disclosed to the person, and the person notifies Business Associate of any instances of which it is aware in which the confidentiality of the information has been breached.
+
+3.7 Business Associate may provide data aggregation services relating to the health care operations of Covered Entity.
+
+4. Provisions for Covered Entity to Inform Business Associate of Privacy Practices and Restrictions
+
+4.1 Covered Entity shall notify Business Associate of any limitation(s) in the notice of privacy practices of Covered Entity under 45 CFR 164.520, to the extent that such limitation may affect Business Associate's use or disclosure of Protected Health Information.
+
+4.2 Covered Entity shall notify Business Associate of any changes in, or revocation of, the permission by an individual to use or disclose his or her Protected Health Information, to the extent that such changes may affect Business Associate's use or disclosure of Protected Health Information.
+
+4.3 Covered Entity shall notify Business Associate of any restriction on the use or disclosure of Protected Health Information that Covered Entity has agreed to or is required to abide by under 45 CFR 164.522, to the extent that such restriction may affect Business Associate's use or disclosure of Protected Health Information.
+
+5. Term and Termination
+
+5.1 Term. The Term of this Agreement shall be effective as of the Effective Date and shall terminate on the later of the termination of the Master Services Agreement or the date Covered Entity terminates for cause as authorized in paragraph 5.2, or on the date all Protected Health Information is returned or destroyed in accordance with paragraph 5.3.
+
+5.2 Termination for Cause. Business Associate authorizes termination of this Agreement by Covered Entity, if Covered Entity determines Business Associate has violated a material term of the Agreement and Business Associate has not cured the breach or ended the violation within thirty (30) days of written notice of the breach.
+
+5.3 Obligations of Business Associate Upon Termination. Upon termination of this Agreement for any reason, Business Associate, with respect to Protected Health Information received from Covered Entity, or created, maintained, or received by Business Associate on behalf of Covered Entity, shall: (a) retain only that Protected Health Information which is necessary for Business Associate to continue its proper management and administration or to carry out its legal responsibilities; (b) return to Covered Entity or, if agreed to by Covered Entity, destroy the remaining Protected Health Information that Business Associate still maintains in any form; (c) continue to use appropriate safeguards and comply with Subpart C of 45 CFR Part 164 with respect to electronic Protected Health Information to prevent use or disclosure of the Protected Health Information, other than as provided for in this Section, for as long as Business Associate retains the Protected Health Information; (d) not use or disclose the Protected Health Information retained by Business Associate other than for the purposes for which such Protected Health Information was retained and subject to the same conditions set out at paragraphs 3.5 and 3.6 which applied prior to termination; and (e) return to Covered Entity or, if agreed to by Covered Entity, destroy the Protected Health Information retained by Business Associate when it is no longer needed by Business Associate for its proper management and administration or to carry out its legal responsibilities. If return or destruction is infeasible, Business Associate shall notify Covered Entity of the conditions that make return or destruction infeasible and shall extend the protections of this Agreement to such Protected Health Information and limit further uses and disclosures to those purposes that make the return or destruction infeasible.
+
+5.4 Survival. The obligations of Business Associate under this Section shall survive the termination of this Agreement.
+
+6. Miscellaneous
+
+6.1 Regulatory References. A reference in this Agreement to a section in the HIPAA Rules means the section as in effect or as amended.
+
+6.2 Amendment. The parties agree to take such action as is necessary to amend this Agreement from time to time as is necessary for compliance with the requirements of the HIPAA Rules and any other applicable law.
+
+6.3 Interpretation. Any ambiguity in this Agreement shall be interpreted to permit compliance with the HIPAA Rules.
+
+6.4 Governing Law. This Agreement shall be governed by the laws of the State of Oregon, except to the extent preempted by federal law.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement by their duly authorized representatives.

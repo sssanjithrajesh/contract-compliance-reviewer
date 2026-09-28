@@ -31,10 +31,18 @@ MD_PATH = ROOT / "docs" / "scorecard.md"
 HIGHER_BETTER = ("presence_accuracy", "span_recall", "citation_precision")
 LOWER_BETTER = ("false_refusal_rate", "hallucinated_presence_rate")
 TOLERANCE = 0.01  # one percentage point of noise allowed
+GATE_CUSTOMER = "harlow-pryce"  # the CUAD-backed set; the CI gate tracks this customer's clauses
 
 
-def run(reviewer_name: str) -> Scorecard:
+def run(reviewer_name: str, customer_id: str | None = None) -> Scorecard:
     cases = load_cases(CASES_DIR)
+    if customer_id:
+        from reviewer.config import load_customer
+
+        wanted = set(load_customer(customer_id).clauses)
+        cases = [c for c in cases if c.clause_type in wanted]
+        if not cases:
+            raise SystemExit(f"no eval cases cover customer {customer_id!r} clause types")
     problems = validate_against_contracts(cases, CONTRACTS_DIR)
     if problems:
         for p in problems[:20]:
@@ -73,26 +81,40 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--gate", action="store_true", help="fail if below evals/gate.json")
     parser.add_argument("--update-gate", action="store_true", help="write current overall metrics to gate")
     parser.add_argument("--no-report", action="store_true", help="skip writing SVG/Markdown/JSON")
+    parser.add_argument(
+        "--customer",
+        default=GATE_CUSTOMER,
+        help=f"score only the clause types this customer checks (default {GATE_CUSTOMER}; the gate tracks it)",
+    )
     args = parser.parse_args(argv)
 
-    card = run(args.reviewer)
+    card = run(args.reviewer, args.customer)
     print_terminal(card)
+    suffix = "" if args.customer == GATE_CUSTOMER else f"-{args.customer}"
+    svg_path = SVG_PATH.with_name(f"scorecard{suffix}.svg")
+    md_path = MD_PATH.with_name(f"scorecard{suffix}.md")
+    latest_path = RESULTS_DIR / f"latest{suffix}.json"
 
     if not args.no_report:
         RESULTS_DIR.mkdir(parents=True, exist_ok=True)
         payload = {
             "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
+            "customer": args.customer,
             **card.as_dict(),
         }
-        (RESULTS_DIR / "latest.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-        write_reports(card, SVG_PATH, MD_PATH)
-        print(f"\nwrote {RESULTS_DIR / 'latest.json'}, {SVG_PATH}, {MD_PATH}")
+        latest_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        write_reports(card, svg_path, md_path)
+        print(f"\nwrote {latest_path}, {svg_path}, {md_path}")
 
+    if args.update_gate and args.customer != GATE_CUSTOMER:
+        raise SystemExit(f"the regression gate tracks the {GATE_CUSTOMER} set; run --update-gate without --customer")
     if args.update_gate:
         GATE_PATH.write_text(json.dumps(card.overall.as_dict(), indent=2), encoding="utf-8")
         print(f"gate updated: {GATE_PATH}")
 
-    if args.gate:
+    if args.gate and args.customer != GATE_CUSTOMER:
+        print(f"\n(gate only applies to the {GATE_CUSTOMER} set; skipped)")
+    elif args.gate:
         failures = check_gate(card, GATE_PATH)
         if failures:
             print("\nREGRESSION GATE FAILED:")

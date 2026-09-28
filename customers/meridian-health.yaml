@@ -1,0 +1,48 @@
+# Customer configuration: Meridian Health Partners (fictional regional health system)
+#
+# Second customer, different domain, same code. Meridian's compliance office reviews
+# vendor Business Associate Agreements (BAAs) before any vendor touches patient data.
+# The checklist is the HIPAA-required BAA content at 45 CFR 164.504(e).
+
+customer:
+  id: meridian-health
+  name: Meridian Health Partners
+  domain: healthcare
+  tagline: no vendor touches PHI until compliance has signed the BAA review
+
+clauses:
+  - baa_permitted_uses
+  - baa_safeguards
+  - baa_breach_notification
+  - baa_subcontractors
+  - baa_individual_rights
+  - baa_hhs_access
+  - baa_return_destroy
+  - baa_termination_for_breach
+
+review:
+  engine: retrieval-hybrid
+  offline: true                     # PHI-adjacent: the pilot runs with no outbound network at all
+  require_named_approver: true
+
+integrations:
+  crm:
+    provider: none                  # vendor records live in their GRC tool; write-back is a Phase 5 item
+  notify:
+    provider: none
+
+access:
+  roles:
+    analyst:     [list_contracts, get_review, review_contract, search_contract]
+    officer:     [list_contracts, get_review, review_contract, search_contract, decide_finding]
+    integration: []
+  identity:
+    mode: proxy_header              # approvals carry the SSO identity; the typed name is ignored (ADR-0004)
+    header: X-Forwarded-User        # set CCR_IDENTITY_MODE=form to run the pilot without a proxy
+
+roi:
+  contracts_per_year: 240
+  junior_hours_before: 2.0
+  junior_hours_after: 0.75
+  senior_hours_before: 1.0
+  senior_hours_after: 0.5

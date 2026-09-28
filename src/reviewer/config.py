@@ -57,8 +57,21 @@ class Integrations(BaseModel):
     notify: NotifySettings = Field(default_factory=NotifySettings)
 
 
+class Identity(BaseModel):
+    """Where the approver's name comes from.
+
+    form          the reviewer types their name (demo / pilot default)
+    proxy_header  an SSO proxy (oauth2-proxy, Cloudflare Access, ALB+OIDC) sits in front of
+                  the app and injects the authenticated user in a header; the typed name is ignored
+    """
+
+    mode: str = "form"
+    header: str = "X-Forwarded-User"
+
+
 class Access(BaseModel):
     roles: dict[str, list[str]] = Field(default_factory=dict)
+    identity: Identity = Field(default_factory=Identity)
 
     def allowed(self, role: str, tool: str) -> bool:
         return tool in self.roles.get(role, [])

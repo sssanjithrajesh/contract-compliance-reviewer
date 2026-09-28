@@ -65,3 +65,4 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.ruff.lint.per-file-ignores]
 "src/reviewer/app/main.py" = ["B008"]  # FastAPI's Depends() in defaults is the documented idiom
 "tests/*" = ["E501"]                   # verbatim contract quotes in tests are long by nature
+"scripts/build_baa_evals.py" = ["E501"]  # anchors are exact contract sentences; wrapping would break them

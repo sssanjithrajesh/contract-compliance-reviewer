@@ -1,0 +1,35 @@
+DATA PROTECTION ADDENDUM
+
+This Data Protection Addendum ("Addendum") supplements the Software Subscription Agreement between Meridian Health Partners ("Customer") and Cobalt Scheduling Cloud, Inc. ("Vendor"). Vendor provides an online appointment scheduling platform that stores patient names, contact details, and appointment reasons on behalf of Customer.
+
+1. Confidentiality
+
+1.1 Vendor shall treat all Customer Data, including any protected health information, as confidential and shall use Customer Data solely to provide the Services described in the Subscription Agreement and for no other purpose.
+
+1.2 Vendor shall not sell Customer Data or use it for advertising.
+
+2. Security
+
+2.1 Vendor maintains an information security program that includes administrative, physical, and technical safeguards designed to protect the confidentiality, integrity, and availability of Customer Data, consistent with industry standards and the HIPAA Security Rule at 45 CFR Part 164 Subpart C.
+
+2.2 Vendor shall encrypt Customer Data in transit and at rest.
+
+3. Incidents
+
+3.1 Vendor shall notify Customer of any confirmed unauthorized access to Customer Data. Vendor will provide such notice as soon as reasonably practicable after Vendor completes its internal investigation.
+
+4. Personnel
+
+4.1 Vendor shall ensure that its employees with access to Customer Data are bound by confidentiality obligations and complete annual privacy training.
+
+5. Term
+
+5.1 This Addendum remains in effect for the duration of the Subscription Agreement.
+
+5.2 Either party may terminate the Subscription Agreement in accordance with its terms. Upon termination, Vendor will disable Customer's access to the platform. Customer may export its data through the platform's export feature prior to the termination date.
+
+6. General
+
+6.1 This Addendum is governed by the laws of the State of Delaware.
+
+6.2 In the event of a conflict between this Addendum and the Subscription Agreement, the Subscription Agreement controls.

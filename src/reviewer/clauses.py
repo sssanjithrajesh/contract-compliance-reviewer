@@ -133,6 +133,69 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             why_it_matters="Constrains pricing to every other customer.",
             keywords=("most favored", "most favoured", "no less favorable", "best price"),
         ),
+        # --- Healthcare: HIPAA Business Associate Agreement checklist (45 CFR 164.504(e)) ---
+        # `cuad_name` doubles as the display name; these are not in CUAD and are evaluated on
+        # manually annotated cases (evals/cases/manual-*.yaml).
+        ClauseType(
+            slug="baa_permitted_uses",
+            cuad_name="Permitted Uses and Disclosures of PHI",
+            question=(
+                "Does the agreement limit how the business associate may use or disclose protected health information?"
+            ),
+            why_it_matters="Required by 164.504(e)(2)(i); without it the agreement is not a valid BAA.",
+            keywords=("permitted uses", "use or disclose", "protected health information", "PHI", "only as permitted"),
+        ),
+        ClauseType(
+            slug="baa_safeguards",
+            cuad_name="Safeguards",
+            question="Must the business associate implement administrative, physical, and technical safeguards?",
+            why_it_matters="Required; ties the vendor to the Security Rule.",
+            keywords=("safeguards", "administrative, physical", "technical safeguards", "security rule"),
+        ),
+        ClauseType(
+            slug="baa_breach_notification",
+            cuad_name="Breach and Incident Reporting",
+            question="Must the business associate report breaches or security incidents, and within what time?",
+            why_it_matters="Drives the covered entity's own 60-day notification clock.",
+            keywords=("breach", "security incident", "report", "notify", "unsecured protected health information"),
+        ),
+        ClauseType(
+            slug="baa_subcontractors",
+            cuad_name="Subcontractor Flow-Down",
+            question="Must subcontractors agree to the same restrictions in writing?",
+            why_it_matters="Required by 164.502(e)(1)(ii); the most commonly missing clause.",
+            keywords=("subcontractor", "agents", "same restrictions", "flow down", "written agreement"),
+        ),
+        ClauseType(
+            slug="baa_individual_rights",
+            cuad_name="Individual Access, Amendment, and Accounting",
+            question=(
+                "Does the business associate have to support access, amendment, and accounting-of-disclosures requests?"
+            ),
+            why_it_matters="Required for designated record sets; a frequent operational gap.",
+            keywords=("access", "amendment", "accounting of disclosures", "designated record set", "164.524"),
+        ),
+        ClauseType(
+            slug="baa_hhs_access",
+            cuad_name="HHS Access to Books and Records",
+            question="Must the business associate make its practices, books, and records available to HHS?",
+            why_it_matters="Required by 164.504(e)(2)(ii)(I).",
+            keywords=("Secretary", "HHS", "books and records", "internal practices", "available to"),
+        ),
+        ClauseType(
+            slug="baa_return_destroy",
+            cuad_name="Return or Destruction of PHI at Termination",
+            question="At termination, must PHI be returned or destroyed, and what happens if that is infeasible?",
+            why_it_matters="Required; determines the vendor's post-contract data footprint.",
+            keywords=("return or destroy", "termination", "infeasible", "retain", "destruction"),
+        ),
+        ClauseType(
+            slug="baa_termination_for_breach",
+            cuad_name="Termination for Material Breach",
+            question="May the covered entity terminate if the business associate violates a material term?",
+            why_it_matters="Required by 164.504(e)(2)(iii).",
+            keywords=("material breach", "terminate", "cure", "violated a material term"),
+        ),
     ]
 }
 

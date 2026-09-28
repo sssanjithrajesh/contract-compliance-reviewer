@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-09-28T04:35:12+00:00",
+  "customer": "meridian-health",
+  "reviewer": "retrieval-hybrid",
+  "overall": {
+    "n": 16,
+    "presence_accuracy": 0.9375,
+    "span_recall": 0.7333,
+    "citation_precision": 0.55,
+    "false_refusal_rate": 0.0909,
+    "hallucinated_presence_rate": 0.0
+  },
+  "by_clause_type": {
+    "baa_breach_notification": {
+      "n": 2,
+      "presence_accuracy": 0.5,
+      "span_recall": 0.5,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.5,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_hhs_access": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 1.0,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_individual_rights": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 0.6667,
+      "citation_precision": 1.0,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_permitted_uses": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 0.6667,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_return_destroy": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 0.5,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_safeguards": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 1.0,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_subcontractors": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 1.0,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    },
+    "baa_termination_for_breach": {
+      "n": 2,
+      "presence_accuracy": 1.0,
+      "span_recall": 1.0,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.0,
+      "hallucinated_presence_rate": 0.0
+    }
+  }
+}

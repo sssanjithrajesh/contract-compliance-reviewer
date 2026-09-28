@@ -7,12 +7,34 @@ A lawyer uploads a messy contract. The system answers fifteen questions a partne
 and for every answer it either points at the exact text in the document or says
 **"not found"**. Nothing gets marked final without a human reviewer signing off.
 
-> Status: **Phase 3 of 4 - integrated and packaged.** Three MCP servers, HubSpot and
-> Slack write-back through a durable outbox, sub-agents for obligations and risk,
-> Docker Compose and a Helm chart, and an offline switch. Every number below is produced
-> by `uv run ccr-eval` and committed; nothing is hand-typed.
+> Status: **Phase 4 of 4 - second customer live on the same code.** A healthcare
+> compliance office reviews HIPAA Business Associate Agreements with the same software the
+> law firm uses for vendor contracts: one YAML file, eight new clause definitions, zero
+> changes to the reviewer. Plus a runbook, a real post-mortem, a three-minute demo
+> script, and SSO-proxy identity for approvals. Every number below is produced by
+> `uv run ccr-eval` and committed; nothing is hand-typed.
 
 ![Eval scorecard](docs/img/scorecard.svg)
+
+### Same code, second domain
+
+| | Harlow & Pryce LLP (legal) | Meridian Health Partners (healthcare) |
+|---|---|---|
+| What they review | Vendor MSAs, licences, supply agreements | Business Associate Agreements (HIPAA) |
+| Checklist | 15 CUAD clause types | 8 required BAA elements, 45 CFR 164.504(e) |
+| Eval set | 120 cases from expert-annotated CUAD | 16 hand-annotated cases: one complete BAA, one deficient vendor addendum |
+| Integrations | HubSpot deals + Slack via outbox | None; fully offline (PHI-adjacent) |
+| Approver identity | Typed name (pilot) | SSO proxy header, typed name ignored |
+| Hallucinated presence (hybrid) | 24% | **0%** |
+| Code changed to onboard | - | `clauses.py` (+8 entries), one YAML, one annotation script |
+
+![Healthcare scorecard](docs/img/scorecard-meridian-health.svg)
+
+The deficient addendum is the interesting half: it has confidentiality, security and a
+breach clause, and is missing five of the eight required elements. The keyword baseline
+invents 60% of them. The hybrid reviewer invents none. Details and the one honest miss
+("present but inadequate" is not yet a distinct finding) in
+[ADR-0004](docs/adr/0004-second-customer-by-config.md).
 
 ### Progression so far
 
@@ -54,7 +76,9 @@ Concretely:
 | "When it cites something, is that real?" | `citation_precision`: every cited span must overlap annotated evidence |
 | "Does it find what a lawyer would find?" | `span_recall` against the CUAD expert annotations |
 | "Will it get worse after an update?" | CI regression gate blocks merges below the committed floor |
-| "Can we run it inside our own network?" | Planned: air-gapped mode swaps the model with one flag (Phase 3) |
+| "Can we run it inside our own network?" | `offline: true` blocks every outbound call at the HTTP client; the embedding model ships in the image |
+| "Will it work for a different kind of contract?" | Second customer (HIPAA BAAs) onboarded with one YAML and zero reviewer changes |
+| "Who approved this?" | Named approver on every decision; in production the name comes from your SSO proxy, not a text box |
 
 ## Architecture (target state)
 
@@ -118,8 +142,18 @@ that gate any prompt change.
 ### Second customer is a YAML file
 
 Everything customer-specific (clause list, engine, integrations, roles, ROI inputs) lives
-in `customers/<id>.yaml`. The code does not know which customer it serves. Phase 4 adds a
-healthcare policy reviewer as a second file.
+in `customers/<id>.yaml`. The code does not know which customer it serves.
+`customers/meridian-health.yaml` is the proof: `CCR_CUSTOMER=meridian-health uv run ccr-serve`
+turns the same binary into a HIPAA BAA reviewer. Each customer gets its own scorecard
+(`uv run ccr-eval --customer meridian-health`); the CI gate stays pinned to the
+CUAD-backed legal set so a change in one domain cannot mask a regression in the other.
+
+### Who approved this?
+
+`access.identity.mode: form` lets a reviewer type their name (pilot). `proxy_header` reads
+the authenticated user from the header your SSO proxy injects (oauth2-proxy, Cloudflare
+Access, ALB + OIDC) and rejects approvals without it. The app never validates tokens
+itself; the proxy does, once, well. `CCR_IDENTITY_MODE` overrides per environment.
 
 ## The eval set is the spec
 
@@ -185,14 +219,15 @@ YAML; `CCR_REVIEWER` overrides the engine; `DATABASE_URL` points at Postgres ins
 the default SQLite. See [`.env.example`](.env.example) for every variable.
 
 > Docker Compose and the Helm chart are written and reviewed but not yet exercised on a
-> cluster; that is the first item in Phase 4 and will get its own post-mortem if it breaks.
+> cluster (no Docker on the development machine). The [runbook](engagement/runbook.md)
+> assumes they work; the first cluster deploy will get its own post-mortem if they do not.
 
 ## Repository map
 
 ```
 src/reviewer/        the system under test
   interfaces.py        Finding / Span / Reviewer protocol - the contract every version honours
-  clauses.py           the 15 clause types, their plain-English questions, and why each matters
+  clauses.py           23 clause types (15 commercial + 8 HIPAA BAA), plain-English questions, why each matters
   baselines.py         keyword baseline (the floor), always-absent (sanity), and the reviewer registry
   ingest.py            PDF / DOCX / TXT to text + page map; detects scans with no text layer
   chunking.py          paragraph-aware chunks that keep character offsets
@@ -200,10 +235,10 @@ src/reviewer/        the system under test
   pipeline.py          RetrievalReviewer (offline) and LLMReviewer (grounded quotes only)
   agents.py            sub-agents: clause extractor, obligation checker, risk summarizer
   config.py            customer YAML loader, offline switch, secrets accessors
-  app/                 FastAPI review queue: upload, propose, approve/reject, export
+  app/                 FastAPI review queue: upload, propose, approve/reject, export; identity.py for SSO proxies
   integrations/        http client (retry/jitter/Retry-After/offline), outbox, HubSpot, Slack, sync
   mcp/                 three MCP servers with per-tool role checks and graceful degradation
-customers/           one YAML per customer; the code does not know which one it serves
+customers/           one YAML per customer (harlow-pryce, meridian-health); the code does not know which one it serves
 skills/contract-review/  packaged skill: when to use, hard rules, tools, procedure, eval hooks
 deploy/helm/ccr/     Helm chart: app, sync worker, secrets, egress NetworkPolicy, ingress
 Dockerfile, docker-compose.yml, .env.example
@@ -211,17 +246,21 @@ evals/
   schema.py            eval case format, loader, span verification
   scoring.py           the five metrics
   report.py            terminal table, Markdown table, SVG chart (no matplotlib)
-  run.py               CLI + CI regression gate
-  cases/*.yaml         120 cases, one file per contract
-  contracts/*.txt      the 8 contract texts (CUAD, CC-BY 4.0)
-  gate.json            the regression floor CI enforces
+  run.py               CLI + CI regression gate; --customer scores one customer's clause set
+  cases/*.yaml         120 CUAD cases + 16 manual BAA cases, one file per contract
+  contracts/*.txt      8 CUAD contracts (CC-BY 4.0) + 2 BAAs (complete, deficient)
+  gate.json            the regression floor CI enforces (legal set)
+scripts/             build_eval_set.py (CUAD sampler), build_baa_evals.py (anchor annotator), calibrate_thresholds.py
 engagement/          what a real engagement produces besides code
   discovery-memo.md    who the customer is, what they do today, what "better" means
   scope.md             what is in, what is out, what "done" means, and the ROI framing
+  runbook.md           on-call guide: symptoms, incidents, secrets, onboarding a new customer
+  demo-script.md       the three-minute demo, timed, with the questions they will ask
 docs/
   adr/                 architecture decision records (options considered, not just the winner)
+  postmortems/         what broke, why, what changed (starting with our own flaky test)
   scorecard.md         current numbers, regenerated by ccr-eval
-  img/scorecard.svg    the chart above
+  img/                 scorecard.svg, scorecard-meridian-health.svg, review-queue.png
 ```
 
 ## Roadmap
@@ -230,13 +269,17 @@ docs/
 |---|---|---|
 | 1 (done) | Eval set, harness, CI gate, interfaces, engagement docs | Baseline row in the progression table |
 | 2 (done) | Ingest, hybrid retrieval, refusal, human-review queue, LLM extraction (behind key) | Scorecard climbed 62% to 82% presence, 61% to 24% hallucination; ADR-0002 |
-| 3 (now) | MCP servers, outbox + HubSpot + Slack, sub-agents, packaged skill, customer YAML, Compose + Helm, offline switch | 48 tests incl. fakes for every failure mode; docs/integrations.md; ADR-0003 |
-| 4 | Deploy for real, post-mortem, runbook, 3-min demo, second customer (healthcare policy reviewer via config), OIDC | Same codebase, different YAML, different domain |
+| 3 (done) | MCP servers, outbox + HubSpot + Slack, sub-agents, packaged skill, customer YAML, Compose + Helm, offline switch | 48 tests incl. fakes for every failure mode; docs/integrations.md; ADR-0003 |
+| 4 (done) | Second customer (HIPAA BAA reviewer) via config, per-customer scorecards, SSO-proxy identity, runbook, post-mortem, demo script | Same codebase, different YAML, different domain, 0% hallucinated presence; 53 tests; ADR-0004 |
+| Next | LLM extraction row (needs key), "present but deficient" finding state, cluster deploy, Salesforce adapter, OCR intake | |
 
 ## Engagement documents
 
 - [Discovery memo](engagement/discovery-memo.md): the customer, their current process, and where the hours go.
 - [Scope](engagement/scope.md): what ships, what does not, and how success is measured.
+- [Runbook](engagement/runbook.md): what is running, what breaks, what to do, in the order a non-engineer needs it.
+- [Demo script](engagement/demo-script.md): three minutes, timed, with the five questions a partner asks afterwards.
+- [Post-mortems](docs/postmortems/): starting with the one-in-sixteen flaky security test and why we did not add retries.
 - [Architecture decisions](docs/adr/): every significant choice with the alternatives that lost.
 - [Integrations and failure modes](docs/integrations.md): one row per way each system can break.
 

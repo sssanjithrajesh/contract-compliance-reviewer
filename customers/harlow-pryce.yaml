@@ -52,6 +52,9 @@ access:
     partner:     [list_contracts, get_review, review_contract, search_contract, decide_finding,
                   crm_lookup_matter, crm_write_findings, notify_channel]
     integration: [crm_lookup_matter, crm_write_findings, crm_reconcile, notify_channel]
+  identity:
+    mode: form                      # pilot: reviewer types their name. Production: proxy_header behind the firm's SSO
+    header: X-Forwarded-User
 
 roi:
   contracts_per_year: 900

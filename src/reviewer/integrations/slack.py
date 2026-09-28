@@ -38,6 +38,12 @@ class Slack:
 def verify_signature(
     signing_secret: str, timestamp: str, body: bytes, signature: str, now: float | None = None
 ) -> bool:
+    """Slack request signing (v0). Constant-time compare, 5-minute replay window.
+
+    Testing note: when writing a negative test, build the bad signature so it is provably
+    different from the good one (flip a specific character), not probably different.
+    See docs/postmortems/2026-09-flaky-signature-test.md.
+    """
     try:
         ts = int(timestamp)
     except (TypeError, ValueError):

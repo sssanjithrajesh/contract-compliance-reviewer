@@ -17,6 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from reviewer.app import db, service
+from reviewer.app.identity import resolve_identity
 from reviewer.clauses import CLAUSE_TYPES
 from reviewer.config import CustomerConfig, current_customer
 from reviewer.ingest import IngestError
@@ -99,12 +100,14 @@ def create_app(
     @app.post("/findings/{finding_id}/decide")
     def decide(
         finding_id: int,
+        request: Request,
         status: str = Form(...),
         who: str = Form(""),
         note: str = Form(""),
         session: Session = Depends(get_session),
     ):
-        if status != "proposed" and cfg.review.require_named_approver and not who.strip():
+        who = resolve_identity(request, cfg, who)
+        if status != "proposed" and cfg.review.require_named_approver and not who:
             raise HTTPException(status_code=422, detail="a named reviewer is required to approve or reject")
         try:
             finding = service.decide(session, finding_id, status, who, note)

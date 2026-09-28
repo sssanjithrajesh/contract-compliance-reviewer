@@ -1,0 +1,153 @@
+contract: vendor-baa-deficient
+title: vendor-baa-deficient (manual BAA annotation)
+cases:
+- id: vendor-baa-deficient__baa_permitted_uses
+  contract: vendor-baa-deficient
+  clause_type: baa_permitted_uses
+  question: Does the agreement limit how the business associate may use or disclose protected health information?
+  expected:
+    present: true
+    spans:
+    - start: 383
+      end: 605
+      text: Vendor shall treat all Customer Data, including any protected health information, as confidential
+        and shall use Customer Data solely to provide the Services described in the Subscription Agreement
+        and for no other purpose.
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_permitted_uses
+    license: public-domain
+  tags:
+  - present
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_safeguards
+  contract: vendor-baa-deficient
+  clause_type: baa_safeguards
+  question: Must the business associate implement administrative, physical, and technical safeguards?
+  expected:
+    present: true
+    spans:
+    - start: 692
+      end: 985
+      text: Vendor maintains an information security program that includes administrative, physical, and
+        technical safeguards designed to protect the confidentiality, integrity, and availability of Customer
+        Data, consistent with industry standards and the HIPAA Security Rule at 45 CFR Part 164 Subpart
+        C.
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_safeguards
+    license: public-domain
+  tags:
+  - present
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_breach_notification
+  contract: vendor-baa-deficient
+  clause_type: baa_breach_notification
+  question: Must the business associate report breaches or security incidents, and within what time?
+  expected:
+    present: true
+    spans:
+    - start: 1069
+      end: 1269
+      text: Vendor shall notify Customer of any confirmed unauthorized access to Customer Data. Vendor
+        will provide such notice as soon as reasonably practicable after Vendor completes its internal
+        investigation.
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_breach_notification
+    license: public-domain
+  tags:
+  - present
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_subcontractors
+  contract: vendor-baa-deficient
+  clause_type: baa_subcontractors
+  question: Must subcontractors agree to the same restrictions in writing?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_subcontractors
+    license: public-domain
+  tags:
+  - absent
+  - refusal
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_individual_rights
+  contract: vendor-baa-deficient
+  clause_type: baa_individual_rights
+  question: Does the business associate have to support access, amendment, and accounting-of-disclosures
+    requests?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_individual_rights
+    license: public-domain
+  tags:
+  - absent
+  - refusal
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_hhs_access
+  contract: vendor-baa-deficient
+  clause_type: baa_hhs_access
+  question: Must the business associate make its practices, books, and records available to HHS?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_hhs_access
+    license: public-domain
+  tags:
+  - absent
+  - refusal
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_return_destroy
+  contract: vendor-baa-deficient
+  clause_type: baa_return_destroy
+  question: At termination, must PHI be returned or destroyed, and what happens if that is infeasible?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_return_destroy
+    license: public-domain
+  tags:
+  - absent
+  - refusal
+  - healthcare
+  - baa
+  difficulty: medium
+- id: vendor-baa-deficient__baa_termination_for_breach
+  contract: vendor-baa-deficient
+  clause_type: baa_termination_for_breach
+  question: May the covered entity terminate if the business associate violates a material term?
+  expected:
+    present: false
+    spans: []
+  source:
+    dataset: manual
+    id: vendor-baa-deficient:baa_termination_for_breach
+    license: public-domain
+  tags:
+  - absent
+  - refusal
+  - healthcare
+  - baa
+  difficulty: medium

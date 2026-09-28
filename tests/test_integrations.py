@@ -158,7 +158,8 @@ def test_slack_notify_and_signature_verification():
     secret, ts, body = "shh", str(int(time.time())), b"payload=1"
     sig = "v0=" + hmac.new(secret.encode(), f"v0:{ts}:".encode() + body, hashlib.sha256).hexdigest()
     assert slack.verify_signature(secret, ts, body, sig)
-    assert not slack.verify_signature(secret, ts, body, sig[:-1] + "0")
+    tampered = sig[:-1] + ("1" if sig[-1] == "0" else "0")  # always differs from the real last char
+    assert not slack.verify_signature(secret, ts, body, tampered)
     assert not slack.verify_signature(secret, str(int(time.time()) - 600), body, sig)  # replay
 
 

@@ -22,6 +22,7 @@ from reviewer.app import db, service
 from reviewer.config import CustomerConfig, Secrets, current_customer
 from reviewer.integrations import hubspot as hs
 from reviewer.integrations import outbox
+from reviewer.integrations import salesforce as sf
 from reviewer.integrations import slack as sl
 
 
@@ -31,6 +32,11 @@ def build_dispatchers(cfg: CustomerConfig, transport=None) -> dict[str, outbox.D
         token = Secrets.get(Secrets.HUBSPOT_TOKEN, required=False)
         if token:
             dispatchers["hubspot"] = hs.make_dispatcher(hs.HubSpot(token, transport=transport))
+    if cfg.integrations.crm.provider == "salesforce":
+        token = Secrets.get(Secrets.SALESFORCE_TOKEN, required=False)
+        instance = Secrets.get(Secrets.SALESFORCE_INSTANCE, required=False)
+        if token and instance:
+            dispatchers["salesforce"] = sf.make_dispatcher(sf.Salesforce(token, instance, transport=transport))
     if cfg.integrations.notify.provider == "slack":
         url = Secrets.get(Secrets.SLACK_WEBHOOK, required=False)
         if url:
@@ -59,12 +65,13 @@ def enqueue_review_final(session: Session, cfg: CustomerConfig, review: db.Revie
     summary = service.review_summary(review)
     if not summary["final"]:
         return
-    if cfg.integrations.crm.provider == "hubspot":
+    if cfg.integrations.crm.provider in ("hubspot", "salesforce"):
+        provider = cfg.integrations.crm.provider
         outbox.enqueue(
             session,
-            "hubspot",
+            provider,
             "write_findings",
-            f"hubspot:write_findings:{review.id}",
+            f"{provider}:write_findings:{review.id}",
             {
                 "matter_name": _matter_name(review.contract.filename),
                 "review": service.export_review(review),
@@ -90,11 +97,12 @@ def _matter_name(filename: str) -> str:
 def reconcile(session: Session, cfg: CustomerConfig, now: datetime | None = None) -> dict[str, int]:
     now = now or datetime.now(UTC)
     counts = {"enqueued_missing": 0, "reopened_failed": 0}
-    if cfg.integrations.crm.provider == "hubspot":
+    if cfg.integrations.crm.provider in ("hubspot", "salesforce"):
+        provider = cfg.integrations.crm.provider
         for review in session.scalars(select(db.Review)).all():
             if not service.review_summary(review)["final"]:
                 continue
-            key = f"hubspot:write_findings:{review.id}"
+            key = f"{provider}:write_findings:{review.id}"
             row = session.scalar(select(outbox.OutboxItem).where(outbox.OutboxItem.idempotency_key == key))
             if row is None:
                 enqueue_review_final(session, cfg, review, os.environ.get("CCR_BASE_URL", "http://localhost:8000"))

@@ -117,13 +117,17 @@ class Scorecard:
     overall: Metrics
     by_clause_type: dict[str, Metrics] = field(default_factory=dict)
     results: list[CaseResult] = field(default_factory=list)
+    latency_s: dict[str, float] | None = None
 
     def as_dict(self) -> dict:
-        return {
+        payload = {
             "reviewer": self.reviewer,
             "overall": self.overall.as_dict(),
             "by_clause_type": {k: v.as_dict() for k, v in sorted(self.by_clause_type.items())},
         }
+        if self.latency_s:
+            payload["latency_s"] = self.latency_s
+        return payload
 
 
 def build_scorecard(reviewer_name: str, results: list[CaseResult]) -> Scorecard:

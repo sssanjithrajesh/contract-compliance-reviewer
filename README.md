@@ -42,12 +42,18 @@ invents 60% of them. The hybrid reviewer invents none. Details and the one hones
 |---|---:|---:|---:|---:|---:|
 | Keyword baseline (Phase 1) | 62% | 35% | 17% | 9% | **61%** |
 | Retrieval, BM25 only | 82% | 57% | 36% | 11% | 24% |
-| **Retrieval, hybrid (current)** | **82%** | **62%** | **38%** | **9%** | **24%** |
-| Retrieval + LLM extraction | pending API key | | | | |
+| Retrieval, hybrid (paragraph cites) | 82% | 62% | 38% | 9% | **24%** |
+| **Retrieval, hybrid + sentence confirm (offline default)** | **85%** | **35%** | **55%** | **30%** | **3%** |
+| Retrieval + LLM extraction (scored) | **86%** | **55%** | **85%** | **20%** | **9%** |
 
-Citation precision is the known weak spot: retrieval cites whole paragraphs, the
-annotated clause is one or two sentences inside them. That is the LLM extraction step's
-job ([ADR-0002](docs/adr/0002-retrieval-architecture.md) explains the tradeoff).
+Hallucinated presence on the local engine fell from 24% to **3%**. The LLM path
+(same 120 cases) raises citation precision to **85%** and span recall to **55%**,
+but invents a missing clause **9%** of the time versus **3%** locally. Production
+default stays `retrieval-hybrid`: the demo promise is "do not make things up."
+LLM is an opt-in when a partner wants tighter quotes and accepts the extra
+inventions. Full LLM table: [docs/scorecard-llm.md](docs/scorecard-llm.md).
+Latency: [docs/benchmark.md](docs/benchmark.md). How to read the metrics:
+[field guide](docs/FDE-FIELD-GUIDE.md). One-page portfolio: [docs/portfolio.html](docs/portfolio.html).
 
 Full per-clause table: [docs/scorecard.md](docs/scorecard.md).
 

@@ -18,6 +18,12 @@ class ClauseType:
     question: str
     why_it_matters: str
     keywords: tuple[str, ...] = field(default_factory=tuple)
+    # Phrases that must appear in a cited sentence. Broader `keywords` still help
+    # retrieval; these are the anti-hallucination check. Empty means "use keywords".
+    confirm: tuple[str, ...] = field(default_factory=tuple)
+
+    def confirm_phrases(self) -> tuple[str, ...]:
+        return self.confirm or self.keywords
 
 
 CLAUSE_TYPES: dict[str, ClauseType] = {
@@ -36,6 +42,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Can either party terminate without cause, and on what notice?",
             why_it_matters="A counterparty that can walk away at will changes the risk profile.",
             keywords=("terminate", "for convenience", "without cause", "for any reason"),
+            confirm=("for convenience", "without cause", "for any reason", "without reason", "no cause"),
         ),
         ClauseType(
             slug="cap_on_liability",
@@ -48,6 +55,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
                 "in no event",
                 "cap",
             ),
+            confirm=("limitation of liability", "shall not exceed", "liability cap", "aggregate liability", "in no event"),
         ),
         ClauseType(
             slug="uncapped_liability",
@@ -55,6 +63,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Are there carve-outs where liability is uncapped?",
             why_it_matters="Carve-outs (fraud, IP, confidentiality) are the real exposure.",
             keywords=("shall not apply to", "except", "gross negligence", "willful misconduct"),
+            confirm=("shall not apply", "gross negligence", "willful misconduct", "unlimited liability", "without limitation of liability"),
         ),
         ClauseType(
             slug="non_compete",
@@ -83,6 +92,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Does a change of control trigger any rights or obligations?",
             why_it_matters="Acquisitions can trigger termination or consent requirements.",
             keywords=("change of control", "change in control", "merger", "acquisition"),
+            confirm=("change of control", "change in control"),
         ),
         ClauseType(
             slug="ip_ownership_assignment",
@@ -90,6 +100,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Does either party assign IP ownership to the other?",
             why_it_matters="Determines who owns what gets built.",
             keywords=("intellectual property", "assign", "own", "ownership", "work product"),
+            confirm=("intellectual property", "work product", "hereby assigns", "assigns all", "ip ownership"),
         ),
         ClauseType(
             slug="audit_rights",
@@ -118,6 +129,15 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Is there a minimum purchase or volume commitment?",
             why_it_matters="A guaranteed spend regardless of actual need.",
             keywords=("minimum", "commit", "shall purchase", "at least"),
+            confirm=(
+                "minimum purchase",
+                "minimum commitment",
+                "minimum volume",
+                "minimum quantities",
+                "minimum quantity",
+                "shall purchase at least",
+                "minimum order",
+            ),
         ),
         ClauseType(
             slug="liquidated_damages",
@@ -132,6 +152,7 @@ CLAUSE_TYPES: dict[str, ClauseType] = {
             question="Is there a most-favored-nation pricing clause?",
             why_it_matters="Constrains pricing to every other customer.",
             keywords=("most favored", "most favoured", "no less favorable", "best price"),
+            confirm=("most favored", "most favoured", "no less favorable", "most favoured nation", "most favored nation"),
         ),
         # --- Healthcare: HIPAA Business Associate Agreement checklist (45 CFR 164.504(e)) ---
         # `cuad_name` doubles as the display name; these are not in CUAD and are evaluated on

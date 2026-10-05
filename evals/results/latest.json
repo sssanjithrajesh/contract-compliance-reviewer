@@ -1,53 +1,53 @@
 {
-  "generated_at": "2026-09-28T04:35:08+00:00",
+  "generated_at": "2026-10-05T04:00:59+00:00",
   "customer": "harlow-pryce",
   "reviewer": "retrieval-hybrid",
   "overall": {
     "n": 120,
-    "presence_accuracy": 0.825,
-    "span_recall": 0.6196,
-    "citation_precision": 0.3846,
-    "false_refusal_rate": 0.0926,
-    "hallucinated_presence_rate": 0.2424
+    "presence_accuracy": 0.85,
+    "span_recall": 0.3478,
+    "citation_precision": 0.5522,
+    "false_refusal_rate": 0.2963,
+    "hallucinated_presence_rate": 0.0303
   },
   "by_clause_type": {
     "anti_assignment": {
       "n": 8,
       "presence_accuracy": 0.875,
-      "span_recall": 0.7857,
-      "citation_precision": 0.6429,
+      "span_recall": 0.2857,
+      "citation_precision": 0.3846,
       "false_refusal_rate": 0.125,
       "hallucinated_presence_rate": 0.0
     },
     "audit_rights": {
       "n": 8,
       "presence_accuracy": 0.875,
-      "span_recall": 0.75,
-      "citation_precision": 0.5,
+      "span_recall": 0.5,
+      "citation_precision": 0.6667,
       "false_refusal_rate": 0.25,
       "hallucinated_presence_rate": 0.0
     },
     "cap_on_liability": {
       "n": 8,
-      "presence_accuracy": 0.75,
-      "span_recall": 0.3846,
-      "citation_precision": 0.2857,
-      "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 0.6667
+      "presence_accuracy": 0.5,
+      "span_recall": 0.1538,
+      "citation_precision": 0.4,
+      "false_refusal_rate": 0.6,
+      "hallucinated_presence_rate": 0.3333
     },
     "change_of_control": {
       "n": 8,
-      "presence_accuracy": 0.75,
-      "span_recall": 0.6667,
-      "citation_precision": 0.3333,
-      "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 0.5
+      "presence_accuracy": 0.625,
+      "span_recall": 0.1667,
+      "citation_precision": 1.0,
+      "false_refusal_rate": 0.75,
+      "hallucinated_presence_rate": 0.0
     },
     "exclusivity": {
       "n": 8,
       "presence_accuracy": 1.0,
-      "span_recall": 0.4286,
-      "citation_precision": 0.3333,
+      "span_recall": 0.2857,
+      "citation_precision": 0.4,
       "false_refusal_rate": 0.0,
       "hallucinated_presence_rate": 0.0
     },
@@ -55,25 +55,25 @@
       "n": 8,
       "presence_accuracy": 0.875,
       "span_recall": 0.875,
-      "citation_precision": 0.5,
+      "citation_precision": 0.6364,
       "false_refusal_rate": 0.125,
       "hallucinated_presence_rate": 0.0
     },
     "insurance": {
       "n": 8,
       "presence_accuracy": 1.0,
-      "span_recall": 1.0,
+      "span_recall": 0.3333,
       "citation_precision": 0.75,
       "false_refusal_rate": 0.0,
       "hallucinated_presence_rate": 0.0
     },
     "ip_ownership_assignment": {
       "n": 8,
-      "presence_accuracy": 0.625,
-      "span_recall": 0.5,
-      "citation_precision": 0.375,
-      "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 1.0
+      "presence_accuracy": 0.75,
+      "span_recall": 0.25,
+      "citation_precision": 0.5556,
+      "false_refusal_rate": 0.2,
+      "hallucinated_presence_rate": 0.3333
     },
     "liquidated_damages": {
       "n": 8,
@@ -86,24 +86,24 @@
     "minimum_commitment": {
       "n": 8,
       "presence_accuracy": 0.625,
-      "span_recall": 0.2222,
-      "citation_precision": 0.25,
-      "false_refusal_rate": 0.3333,
-      "hallucinated_presence_rate": 0.4
+      "span_recall": 0.0,
+      "citation_precision": 0.0,
+      "false_refusal_rate": 1.0,
+      "hallucinated_presence_rate": 0.0
     },
     "most_favored_nation": {
       "n": 8,
-      "presence_accuracy": 0.625,
+      "presence_accuracy": 1.0,
       "span_recall": 0.0,
       "citation_precision": 0.0,
       "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 0.375
+      "hallucinated_presence_rate": 0.0
     },
     "non_compete": {
       "n": 8,
       "presence_accuracy": 1.0,
       "span_recall": 1.0,
-      "citation_precision": 0.5,
+      "citation_precision": 1.0,
       "false_refusal_rate": 0.0,
       "hallucinated_presence_rate": 0.0
     },
@@ -118,18 +118,24 @@
     "termination_for_convenience": {
       "n": 8,
       "presence_accuracy": 0.75,
-      "span_recall": 0.8333,
-      "citation_precision": 0.3125,
-      "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 1.0
+      "span_recall": 0.5,
+      "citation_precision": 0.5,
+      "false_refusal_rate": 0.3333,
+      "hallucinated_presence_rate": 0.0
     },
     "uncapped_liability": {
       "n": 8,
-      "presence_accuracy": 0.75,
+      "presence_accuracy": 1.0,
       "span_recall": 1.0,
-      "citation_precision": 0.1667,
+      "citation_precision": 1.0,
       "false_refusal_rate": 0.0,
-      "hallucinated_presence_rate": 0.2857
+      "hallucinated_presence_rate": 0.0
     }
+  },
+  "latency_s": {
+    "n": 120,
+    "total": 39.877,
+    "p50": 0.0126,
+    "p95": 2.2252
   }
 }

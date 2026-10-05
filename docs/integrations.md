@@ -71,5 +71,7 @@ epoch-millisecond string, 100 requests per 10 seconds, no server-side idempotenc
   tested; the endpoint is not.
 - OIDC on the web app. The pilot runs inside the firm's network with no login; the
   ingress-level OIDC pattern is described in the Helm values.
-- Salesforce adapter. The CRM layer is a protocol with one implementation (HubSpot).
-  Adding Salesforce is a second module with the same three methods.
+- Salesforce inbound UI (approve from a Task). The adapter, outbox path, and MCP lookup
+  are wired; set `integrations.crm.provider: salesforce` plus `SALESFORCE_ACCESS_TOKEN`
+  and `SALESFORCE_INSTANCE_URL`. See `src/reviewer/integrations/salesforce.py` for the
+  SOQL-escaping and Task-idempotency quirks.

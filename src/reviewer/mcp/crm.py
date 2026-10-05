@@ -1,4 +1,4 @@
-"""MCP server: the firm's CRM (HubSpot) as matter records.
+"""MCP server: the firm's CRM (HubSpot or Salesforce) as matter records.
 
     uv run ccr-mcp-crm
 
@@ -14,7 +14,7 @@ from mcp.server.mcpserver import MCPServer
 from reviewer.app import db
 from reviewer.config import Secrets, current_customer
 from reviewer.integrations import hubspot as hs
-from reviewer.integrations import outbox, sync
+from reviewer.integrations import outbox, salesforce as sf, sync
 from reviewer.mcp.common import guarded
 
 
@@ -25,16 +25,29 @@ def build(session_factory=None, cfg_getter=current_customer, transport=None) -> 
         instructions="Matter records for contract reviews. Writes are queued and idempotent.",
     )
 
-    def client() -> hs.HubSpot:
-        return hs.HubSpot(Secrets.get(Secrets.HUBSPOT_TOKEN), transport=transport)
-
-    @server.tool(description="Look up a matter (HubSpot deal) by name. Read-only.")
-    @guarded("crm_lookup_matter", cfg_getter)
-    def crm_lookup_matter(name: str) -> dict:
-        deal = client().find_deal(name)
+    def _lookup(name: str) -> dict:
+        provider = cfg_getter().integrations.crm.provider
+        if provider == "salesforce":
+            token = Secrets.get(Secrets.SALESFORCE_TOKEN, required=False)
+            instance = Secrets.get(Secrets.SALESFORCE_INSTANCE, required=False)
+            if not token or not instance:
+                return {"status": "unavailable", "reason": "not configured"}
+            rec = sf.Salesforce(token, instance, transport=transport).find_opportunity(name)
+            if rec is None:
+                return {"status": "not_found", "name": name}
+            return {"status": "ok", "matter_id": rec.get("Id"), "properties": rec}
+        token = Secrets.get(Secrets.HUBSPOT_TOKEN, required=False)
+        if not token:
+            return {"status": "unavailable", "reason": "not configured"}
+        deal = hs.HubSpot(token, transport=transport).find_deal(name)
         if deal is None:
             return {"status": "not_found", "name": name}
         return {"status": "ok", "matter_id": deal["id"], "properties": deal.get("properties", {})}
+
+    @server.tool(description="Look up a matter (HubSpot deal or Salesforce Opportunity) by name. Read-only.")
+    @guarded("crm_lookup_matter", cfg_getter)
+    def crm_lookup_matter(name: str) -> dict:
+        return _lookup(name)
 
     @server.tool(
         description="Queue the approved findings of a contract's final review for write-back to its matter record."

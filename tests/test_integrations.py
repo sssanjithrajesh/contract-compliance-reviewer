@@ -12,7 +12,7 @@ import pytest
 from reviewer.app import db, service
 from reviewer.config import load_customer
 from reviewer.integrations import hubspot as hs
-from reviewer.integrations import outbox, slack, sync
+from reviewer.integrations import outbox, salesforce as sf, slack, sync
 from reviewer.integrations.http import (
     Client,
     OfflineError,
@@ -255,3 +255,78 @@ def test_review_final_enqueues_hubspot_and_slack_and_reconcile_is_idempotent(ses
     assert sync.reconcile(session, cfg)["enqueued_missing"] == 1
     outbox.process_once(session, dispatchers)
     assert len(fake.notes) == 1
+
+
+class FakeSalesforce:
+    def __init__(self):
+        self.opps: list[dict] = []
+        self.tasks: list[dict] = []
+
+    def handler(self, request: httpx.Request) -> httpx.Response:
+        path = request.url.path
+        if request.method == "GET" and path.endswith("/query"):
+            q = request.url.params.get("q", "")
+            if "FROM Opportunity" in q:
+                return httpx.Response(200, json={"records": self.opps[:1]})
+            if "FROM Task" in q:
+                return httpx.Response(200, json={"records": self.tasks[:1] if self.tasks else []})
+            return httpx.Response(200, json={"records": []})
+        if request.method == "POST" and path.endswith("/sobjects/Opportunity"):
+            rec = {"Id": "006xx1", "Name": "Matter"}
+            self.opps.append(rec)
+            return httpx.Response(201, json={"id": "006xx1", "success": True})
+        if request.method == "POST" and path.endswith("/sobjects/Task"):
+            body = json.loads(request.content)
+            rec = {"Id": f"00T{len(self.tasks)+1}", **body}
+            self.tasks.append(rec)
+            return httpx.Response(201, json={"id": rec["Id"], "success": True})
+        return httpx.Response(404, text=path)
+
+
+def test_salesforce_escapes_quotes_and_is_idempotent():
+    fake = FakeSalesforce()
+    client = sf.Salesforce("tok", "https://example.my.salesforce.com", transport=httpx.MockTransport(fake.handler))
+    first = client.ensure_opportunity("Acme's Deal")
+    # Second write with the same key must not create a second Task.
+    fake.tasks.append({"Id": "00T1", "Description": "hello [ccr:k1]"})
+    a = client.write_findings_task("k1", first["Id"], "body")
+    b = client.write_findings_task("k1", first["Id"], "body")
+    assert a == b == "00T1"
+    assert _soql_safe()
+
+
+def _soql_safe() -> bool:
+    assert sf._soql_escape("O'Brien") == "O''Brien"
+    return True
+
+
+def test_salesforce_dispatcher_writes_one_task():
+    fake = FakeSalesforce()
+    dispatch = sf.make_dispatcher(
+        sf.Salesforce("t", "https://example.my.salesforce.com", transport=httpx.MockTransport(fake.handler))
+    )
+    remote = dispatch(
+        "write_findings",
+        "k-sf",
+        {
+            "matter_name": "Vendor Msa",
+            "review": {
+                "contract": "msa.txt",
+                "reviewer": "keyword",
+                "findings": [
+                    {
+                        "status": "approved",
+                        "present": True,
+                        "clause_type": "governing_law",
+                        "citations": [{"page": 1, "text": "New York"}],
+                        "decided_by": "A. Harlow",
+                        "decided_at": "now",
+                    }
+                ],
+                "summary": {"approved": 1, "rejected": 0, "proposed": 0},
+            },
+        },
+    )
+    assert remote.startswith("00T")
+    assert len(fake.tasks) == 1
+    assert "governing_law: FOUND" in fake.tasks[0]["Description"]

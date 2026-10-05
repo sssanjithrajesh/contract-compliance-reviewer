@@ -48,6 +48,25 @@ def test_bm25_index_ranks_governing_law_first():
     assert "Governing Law" in hits[0].chunk.text
 
 
+def test_retrieval_cites_a_sentence_not_the_whole_section():
+    r = RetrievalReviewer(RetrievalConfig(mode="bm25", bm25_min_score=1.0, cite_top_n=1))
+    f = r.review(CONTRACT, "governing_law", "Which law governs?")
+    assert f.present
+    assert all("Payment" not in s.text for s in f.spans)
+    assert any("New York" in s.text for s in f.spans)
+    assert all(len(s.text) < 400 for s in f.spans)
+
+
+def test_retrieval_refuses_generic_terminate_without_convenience():
+    text = CONTRACT.replace("Termination for Convenience", "Termination for Breach").replace(
+        "Either party may terminate this Agreement for any reason\nupon ninety (90) days prior written notice to the other party.",
+        "Either party may terminate this Agreement for material breach\nupon thirty (30) days prior written notice to the other party.",
+    )
+    r = RetrievalReviewer(RetrievalConfig(mode="bm25", bm25_min_score=1.0))
+    f = r.review(text, "termination_for_convenience", "Can they walk away?")
+    assert f.present is False
+
+
 def test_retrieval_reviewer_bm25_cites_and_refuses():
     r = RetrievalReviewer(RetrievalConfig(mode="bm25", bm25_min_score=1.0))
     f = r.review(CONTRACT, "governing_law", "Which law governs?")
@@ -93,6 +112,13 @@ def test_llm_reviewer_tolerates_whitespace_differences():
     r = LLMReviewer(client=client, model="fake", retrieval=RetrievalConfig(mode="bm25"))
     f = r.review(CONTRACT, "termination_for_convenience", "Can they terminate?")
     assert f.present and "ninety (90) days" in f.spans[0].text
+
+
+def test_llm_parse_answer_refuses_broken_json():
+    assert LLMReviewer._parse_answer("not json")["present"] is False
+    assert LLMReviewer._parse_answer('{"present": false, "quotes": []}')["present"] is False
+    messy = '{"present": true, "quotes": ["He said "hello" to them"]}'
+    assert LLMReviewer._parse_answer(messy)["present"] is False
 
 
 def test_llm_reviewer_requires_key_without_client(monkeypatch):

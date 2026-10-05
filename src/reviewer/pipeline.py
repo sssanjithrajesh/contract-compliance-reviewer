@@ -1,7 +1,8 @@
 """The reviewers that matter: retrieval-only and retrieval + LLM extraction.
 
 RetrievalReviewer answers "where in this contract should a lawyer look for clause X?"
-It cites the top chunks and refuses when nothing scores above a threshold. No model
+It cites the shortest confirming sentences inside the top chunks and refuses when
+nothing scores above a threshold or no distinctive phrase is present. No model
 reasoning, so it cannot hallucinate content, but it also cannot tell a real
 termination-for-convenience clause from a paragraph that merely mentions termination.
 
@@ -19,6 +20,7 @@ from dataclasses import dataclass
 
 from reviewer.chunking import chunk_text
 from reviewer.clauses import CLAUSE_TYPES
+from reviewer.extract import distinctive_hits, sentences_from_text
 from reviewer.interfaces import Finding, Span
 from reviewer.retrieval import Index, Mode
 
@@ -75,11 +77,22 @@ class RetrievalReviewer:
         if not present:
             return Finding.absent(rationale="no chunk scored above the presence threshold", confidence=0.6)
         hits = index.search(query, k=self.config.top_k)
-        spans = [h.chunk.as_span() for h in hits[: self.config.cite_top_n]]
+        sentences: list[Span] = []
+        for hit in hits:
+            sentences.extend(sentences_from_text(hit.chunk.text, hit.chunk.start))
+        phrases = CLAUSE_TYPES[clause_type].confirm_phrases()
+        spans = distinctive_hits(sentences, phrases, limit=self.config.cite_top_n)
+        if not spans:
+            # Retrieval liked a neighbourhood that never actually states the clause
+            # (e.g. "terminate for breach" vs "terminate for convenience"). Refuse.
+            return Finding.absent(
+                rationale="top chunks mention the topic but no distinctive clause phrase",
+                confidence=0.55,
+            )
         return Finding(
             present=True,
             spans=spans,
-            rationale=f"top-{len(spans)} retrieved chunks for {clause_type}",
+            rationale=f"sentence-level evidence in top-{len(hits)} chunks for {clause_type}",
             confidence=confidence,
         )
 
@@ -108,17 +121,33 @@ class LLMReviewer:
             client = anthropic.Anthropic()
         self.client = client
 
+    @staticmethod
+    def _parse_answer(raw: str) -> dict:
+        """Best-effort JSON object. Unparseable output is a refusal, not a crash."""
+        start = raw.find("{")
+        if start < 0:
+            return {"present": False, "quotes": [], "reasoning": "model returned no JSON"}
+        try:
+            obj, _ = json.JSONDecoder().raw_decode(raw, start)
+        except json.JSONDecodeError:
+            return {"present": False, "quotes": [], "reasoning": "model JSON was unparseable"}
+        if not isinstance(obj, dict):
+            return {"present": False, "quotes": [], "reasoning": "model JSON was not an object"}
+        return obj
+
     def _ask(self, question: str, excerpts: list[str]) -> dict:
         joined = "\n\n---\n\n".join(f"[excerpt {i + 1}]\n{e}" for i, e in enumerate(excerpts))
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=800,
-            system=_SYSTEM,
-            messages=[{"role": "user", "content": f"Question: {question}\n\nExcerpts:\n{joined}"}],
-        )
+        try:
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=800,
+                system=_SYSTEM,
+                messages=[{"role": "user", "content": f"Question: {question}\n\nExcerpts:\n{joined}"}],
+            )
+        except Exception as exc:  # noqa: BLE001 — eval must finish even if one call fails
+            return {"present": False, "quotes": [], "reasoning": f"provider error: {exc.__class__.__name__}"}
         raw = "".join(getattr(b, "text", "") for b in response.content)
-        match = re.search(r"\{.*\}", raw, flags=re.S)
-        return json.loads(match.group(0)) if match else {"present": False, "quotes": []}
+        return self._parse_answer(raw)
 
     @staticmethod
     def _ground(quotes: list[str], contract_text: str) -> list[Span]:

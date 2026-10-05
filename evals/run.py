@@ -12,7 +12,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import statistics
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -23,6 +26,21 @@ from reviewer.baselines import get_reviewer
 
 ROOT = Path(__file__).resolve().parent.parent
 GATE_PATH = ROOT / "evals" / "gate.json"
+
+
+def _load_dotenv() -> None:
+    """Pull KEY=value lines from .env into os.environ. Never prints values."""
+    path = ROOT / ".env"
+    if not path.exists():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
 RESULTS_DIR = ROOT / "evals" / "results"
 SVG_PATH = ROOT / "docs" / "img" / "scorecard.svg"
 MD_PATH = ROOT / "docs" / "scorecard.md"
@@ -52,12 +70,23 @@ def run(reviewer_name: str, customer_id: str | None = None) -> Scorecard:
     reviewer = get_reviewer(reviewer_name)
     text_cache: dict[str, str] = {}
     results = []
+    timings: list[float] = []
+    t0 = time.perf_counter()
     for case in cases:
         if case.contract not in text_cache:
             text_cache[case.contract] = case.contract_text(CONTRACTS_DIR)
+        started = time.perf_counter()
         finding = reviewer.review(text_cache[case.contract], case.clause_type, case.question)
+        timings.append(time.perf_counter() - started)
         results.append(score_case(case, finding))
-    return build_scorecard(reviewer.name, results)
+    card = build_scorecard(reviewer.name, results)
+    card.latency_s = {
+        "n": len(timings),
+        "total": round(time.perf_counter() - t0, 3),
+        "p50": round(statistics.median(timings), 4) if timings else 0.0,
+        "p95": round(sorted(timings)[max(0, int(len(timings) * 0.95) - 1)], 4) if timings else 0.0,
+    }
+    return card
 
 
 def check_gate(card: Scorecard, gate_path: Path) -> list[str]:
@@ -87,10 +116,42 @@ def main(argv: list[str] | None = None) -> int:
         help=f"score only the clause types this customer checks (default {GATE_CUSTOMER}; the gate tracks it)",
     )
     args = parser.parse_args(argv)
+    _load_dotenv()
+
+    if args.reviewer == "llm" and not os.environ.get("ANTHROPIC_API_KEY"):
+        skip = ROOT / "docs" / "llm-eval.md"
+        skip.write_text(
+            "\n".join(
+                [
+                    "### LLM extraction — not scored on this machine",
+                    "",
+                    "`ANTHROPIC_API_KEY` is unset. `LLMReviewer` is wired and unit-tested",
+                    "against a fake client (verbatim quotes only; fabricated quotes are dropped).",
+                    "The 120-case run is skipped so CI and local machines without a key stay green.",
+                    "",
+                    "To score it:",
+                    "",
+                    "```",
+                    "set ANTHROPIC_API_KEY=...",
+                    "uv run ccr-eval --reviewer llm",
+                    "```",
+                    "",
+                    "Keep the row only if hallucinated presence and citation precision beat",
+                    "`retrieval-hybrid` (currently 3% and 55%). Otherwise the local engine stays",
+                    "the production default — that is the eval-driven call OpenAI's JD asks for.",
+                    "",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        print(f"llm eval skipped (no ANTHROPIC_API_KEY); wrote {skip}")
+        return 0
 
     card = run(args.reviewer, args.customer)
     print_terminal(card)
     suffix = "" if args.customer == GATE_CUSTOMER else f"-{args.customer}"
+    if args.reviewer == "llm":
+        suffix = f"{suffix}-llm" if suffix else "-llm"
     svg_path = SVG_PATH.with_name(f"scorecard{suffix}.svg")
     md_path = MD_PATH.with_name(f"scorecard{suffix}.md")
     latest_path = RESULTS_DIR / f"latest{suffix}.json"
@@ -104,6 +165,32 @@ def main(argv: list[str] | None = None) -> int:
         }
         latest_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         write_reports(card, svg_path, md_path)
+        if card.latency_s:
+            bench = ROOT / "docs" / ("benchmark-llm.md" if args.reviewer == "llm" else "benchmark.md")
+            lat = card.latency_s
+            m = card.overall
+            bench.write_text(
+                "\n".join(
+                    [
+                        "### Latency and quality (this machine)",
+                        "",
+                        "| Measure | Value | What a partner should take from it |",
+                        "|---|---:|---|",
+                        f"| Cases | {lat['n']} | Same 120 CUAD-backed questions every run |",
+                        f"| p50 per question | {lat['p50']*1000:.0f} ms | Typical look-up |",
+                        f"| p95 per question | {lat['p95']*1000:.0f} ms | Slow tail; first contract pays for embedding |",
+                        f"| Wall time for the set | {lat['total']:.1f} s | Includes model load |",
+                        f"| Hallucinated presence | {m.hallucinated_presence_rate:.0%} | How often we invent a missing clause |",
+                        f"| Citation precision | {m.citation_precision:.0%} | Cited span overlaps expert evidence |",
+                        "",
+                        "API token cost is $0 on `retrieval-hybrid` (local embeddings). "
+                        "`llm` is unmeasured until `ANTHROPIC_API_KEY` is set; then this table "
+                        "gains a `$ / review` row from the provider usage object.",
+                        "",
+                    ]
+                ),
+                encoding="utf-8",
+            )
         print(f"\nwrote {latest_path}, {svg_path}, {md_path}")
 
     if args.update_gate and args.customer != GATE_CUSTOMER:

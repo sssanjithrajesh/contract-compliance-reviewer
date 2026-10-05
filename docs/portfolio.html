@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sanjith — forward deployed work</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 720px; margin: 3rem auto; line-height: 1.45; color: #1c1c1c; }
+    a { color: #0b3d91; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border-bottom: 1px solid #ddd; padding: 0.4rem 0.2rem; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Work that looks like an FDE engagement</h1>
+  <p>A law firm uploads a contract. The system cites a sentence or says not found. A person signs before anything is written to the CRM. A second customer (HIPAA BAAs) is a YAML file. Next to it: the MCP design interviewers ask for — Salesforce, Slack, HR, and a warehouse that only answers SELECT.</p>
+  <table>
+    <tr><th></th><th>Presence</th><th>Citation</th><th>Invented a missing clause</th></tr>
+    <tr><td>Keyword baseline</td><td>62%</td><td>17%</td><td>61%</td></tr>
+    <tr><td>Local hybrid (what we ship offline)</td><td>85%</td><td>55%</td><td><strong>3%</strong></td></tr>
+    <tr><td>LLM extraction (same 120 cases)</td><td>86%</td><td>85%</td><td>9%</td></tr>
+  </table>
+  <p>The LLM quotes better. It invents more. The default stays local because the partner's first question is "how often does it make things up?"</p>
+  <h2>Open them</h2>
+  <ul>
+    <li><a href="https://github.com/sssanjithrajesh/contract-compliance-reviewer">Contract compliance reviewer</a> — evals, ADRs, HubSpot + Salesforce outbox. Local demo: <code>uv run ccr-serve</code> then http://127.0.0.1:8000</li>
+    <li>Enterprise MCP hub — <code>uv run emh-serve</code> then http://127.0.0.1:8010</li>
+    <li><a href="https://github.com/sssanjithrajesh/support-ops-agent">Support ops agent</a></li>
+    <li><a href="https://github.com/sssanjithrajesh/legacy-test-writer">Legacy test writer</a></li>
+    <li><a href="https://github.com/sssanjithrajesh/ops-ontology-router">Ops ontology router</a></li>
+    <li><a href="https://github.com/sssanjithrajesh/shared-eval-and-deploy">Shared eval and deploy</a></li>
+  </ul>
+  <p>Study notes: <code>docs/FDE-FIELD-GUIDE.md</code> in this folder.</p>
+</body>
+</html>
